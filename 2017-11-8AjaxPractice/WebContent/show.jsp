@@ -47,7 +47,7 @@
 	function fillCity(){
 		var selectP = document.getElementById("p");
 		var selectC = document.getElementById("c");
-		
+		selectC.innerHTML="<option>----Please select a city----</option>";
 		var pName = selectP.options[selectP.selectedIndex].text;
 		var p = provinces.getElementsByTagName("provinces");
 		
