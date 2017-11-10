@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ca.mcmaster.service.BookService;
+import ca.mcmaster.service.BookServiceFactory;
 import ca.mcmaster.service.BookServiceImpl;
+import ca.mcmaster.vo.Users;
 
 public class BookServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,22 +28,40 @@ public class BookServlet extends HttpServlet {
 	}
 	
 	protected void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		BookService service = new BookServiceImpl();
-		
+		BookService service = BookServiceFactory.getInstance();
+		Users u = (Users) request.getSession().getAttribute("user");
 		try {
-			service.addBook();
+			service.addBook(u);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	protected void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("delete");
+		BookService service = BookServiceFactory.getInstance();
+		Users u = (Users) request.getSession().getAttribute("user");
+		try {
+			service.deleteBook(u);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	protected void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("update");
+		BookService service = BookServiceFactory.getInstance();
+		Users u = (Users) request.getSession().getAttribute("user");
+		try {
+			service.updateBook(u);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	protected void search(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("search");
+		BookService service = BookServiceFactory.getInstance();
+		Users u = (Users) request.getSession().getAttribute("user");
+		try {
+			service.searchBook(u);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
