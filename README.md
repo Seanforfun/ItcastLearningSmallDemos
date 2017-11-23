@@ -6,3 +6,5 @@ Watch vedios from itcast education. This repository is used to save all of the s
 #2 Use Ajax to realize a small demo which can get the name of province by using xml and use json to get the name of the cities.(2017-11-8).
 
 #3 Use Proxy and annotation to realize privilege control to a tiny book store.(2017-11-9)
+
+#4 Use Struts2 to realize a simple login function.(2017-11-22)
