@@ -8,3 +8,5 @@ Watch vedios from itcast education. This repository is used to save all of the s
 #3 Use Proxy and annotation to realize privilege control to a tiny book store.(2017-11-9)
 
 #4 Use Struts2 to realize a simple login function.(2017-11-22)
+
+#5 Use Struts2 to practice input validation and interceptor practice.(2017-11-27)

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="Login" namespace="/" extends="struts-default">
+		<action name="login" class="ca.mcmaster.action.LoginAction"
+			method="login">
+			<result type="redirect" name="success">/welcome.jsp</result>
+			<result type="dispatcher" name="fail">/login.jsp</result>
+			<result type="redirect" name="success">/welcome.jsp</result>
+			<result type="dispatcher" name="input">/login.jsp</result>
+		</action>
+	</package>
+
+	<package name="Book" namespace="/" extends="struts-default">
+		<interceptors>
+			<interceptor name="bookprivilage"
+				class="ca.mcmaster.interceptor.BookInterceptor"></interceptor>
+				<interceptor-stack name="myStack">
+					<interceptor-ref name="bookprivilage">
+						<param name="excludeMethods">research</param>
+						<param name="includeMethods">add,delete,update</param>
+					</interceptor-ref>
+					<interceptor-ref name="defaultStack"></interceptor-ref>
+				</interceptor-stack>
+		</interceptors>
+
+		<action name="*_*" class="ca.mcmaster.action.{1}Action" method="{2}">
+			<interceptor-ref name="myStack"></interceptor-ref>
+			<result name="login">/login.jsp</result>
+		</action>
+	</package>
+</struts>
