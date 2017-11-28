@@ -9,6 +9,7 @@
 </head>
 <body>
 	<s:fielderror/>
+	<s:actionerror/>
 	<form action="${pageContext.request.contextPath}/login" method="post">
 		<table>
 			<tr>
