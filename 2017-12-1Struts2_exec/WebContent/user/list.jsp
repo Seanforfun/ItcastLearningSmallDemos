@@ -123,7 +123,7 @@ Add
 									style="FONT-WEIGHT: bold; FONT-SIZE: 12pt; HEIGHT: 25px; BACKGROUND-COLOR: #afd1f3">
 
 									<td align="center" width="18%">
-										Nickname
+										Login Name
 									</td>
 									<td align="center" width="17%">
 										Username
