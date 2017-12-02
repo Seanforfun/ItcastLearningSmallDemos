@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
 function ini(){
    document.form1.logonName.focus();
@@ -28,7 +29,7 @@ function ini(){
 									</tr>
 									<tr>
 										<td align="center" valign="bottom" background="${pageContext.request.contextPath}/images/loginbg.gif">
-											<form id="loginAction_home" name="form1" action="${pageContext.request.contextPath}/login/home.jsp" target="_parent" method="post">
+											<s:form id="loginAction_home" name="form1" action="user_login" namespace="/" target="_parent" method="post">
 												<table border="0" align="center" cellpadding="2" cellspacing="0">
 													<tr align="center">
 														<td height="30" colspan="2" style="border-bottom: 1px dotted #cccccc">
@@ -40,7 +41,7 @@ function ini(){
 															<font color="000F60"><strong>Username:</strong> </font>
 														</td>
 														<td>
-															<input type="text" name="logonName" value="" id="logonName" class="text" style="width: 160px;"/>
+															<s:textfield name="loginName" id="loginName" cssClass="text" cssStyle="width: 160px;"/>
 														</td>
 													</tr>
 													<tr>
@@ -48,7 +49,7 @@ function ini(){
 															<strong><font color="000F60">Password: </font> </strong>
 														</td>
 														<td>
-															<input type="password" name="logonPwd" id="logonPwd" class="text" style="width: 160px;"/>
+															<s:password name="loginPwd" id="loginPwd" cssClass="text" cssStyle="width: 160px;"/>
 														</td>
 													</tr>
 													<tr>
@@ -60,14 +61,12 @@ function ini(){
 														<td height="30">
 														</td>
 														<td>
-															<input type="submit" name="submit" value="&#30331;&#24405;" class="buttoninput"/>
-
-															<input type="reset" name="reset" value="&#21462;&#28040;" class="buttoninput"/>
-
+															<s:submit  name="submit" value="login" cssClass="buttoninput"/>
+															<s:reset name="reset" value="reset" class="buttoninput"/>
 														</td>
 													</tr>
 												</table>
-											</form>
+											</s:form>
 
 
 
