@@ -25,7 +25,7 @@
 		d.add(0,-1,'System menu tree');
 		d.add(2,0,'Employee manage','${pageContext.request.contextPath}/login/welcome.jsp','','mainFrame');
 		
-		d.add(3,2,'User manage','${pageContext.request.contextPath}/user/list.jsp','','mainFrame');
+		d.add(3,2,'User manage','${pageContext.request.contextPath}/User_list','','mainFrame');
 
 		
 		document.write(d);

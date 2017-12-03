@@ -29,11 +29,17 @@ function ini(){
 									</tr>
 									<tr>
 										<td align="center" valign="bottom" background="${pageContext.request.contextPath}/images/loginbg.gif">
-											<s:form id="loginAction_home" name="form1" action="user_login" namespace="/" target="_parent" method="post">
+											<s:form id="loginAction_home" name="form1" action="User_login" namespace="/" target="_parent" method="post">
 												<table border="0" align="center" cellpadding="2" cellspacing="0">
 													<tr align="center">
 														<td height="30" colspan="2" style="border-bottom: 1px dotted #cccccc">
 															<strong style="font-size: 14px;">Please login</strong>
+														</td>
+													</tr>
+													<tr align="center">
+														<td height="30" colspan="2" style="border-bottom: 1px dotted #cccccc">
+															<s:actionerror/>
+															<s:fielderror/>
 														</td>
 													</tr>
 													<tr>

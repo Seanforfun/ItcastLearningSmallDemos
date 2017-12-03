@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
 	<head>
 		<meta http-equiv="Content-Language" content="zh-cn">
@@ -86,8 +87,8 @@ else
 										</td>
 										<td width="155" valign="bottom"
 											background="${pageContext.request.contextPath}/images/mis_05b.jpg">
-											Username：
-											<font color="blue">&#36229;&#32423;&#31649;&#29702;&#21592;</font>
+											Username:
+											<s:property value="#session.userInfo.username"/><!-- <font color="blue"></font> -->
 										</td>
 										<td width="10" align="right"
 											background="${pageContext.request.contextPath}/images/mis_05b.jpg">

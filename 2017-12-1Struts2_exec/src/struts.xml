@@ -6,8 +6,13 @@
 <struts>
 	<constant name="struts.ui.theme" value="simple"></constant>
 	<package name="User" namespace="/" extends="struts-default">
+		<global-results>
+			<result name="login">/login/login.jsp</result>
+		</global-results>
 		<action name="*_*" class="ca.mcmaster.web.action.{1}Action" method="{2}">
-			<result name="login">/login.jsp</result>
+			<result name="login_success">/login/home.jsp</result>
+			<result name="list_success">/user/list.jsp</result>
+			<result name="input">/login/login.jsp</result>
 		</action>
 	</package>
 </struts>

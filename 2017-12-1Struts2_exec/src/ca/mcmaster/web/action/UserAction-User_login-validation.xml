@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+  		"-//Apache Struts//XWork Validator 1.0.3//EN"
+  		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+  		
+  		<validators>
+  			<field name="loginName">
+  				<field-validator type="requiredstring">
+  					<message>Login name is required!</message>
+  				</field-validator>
+  				<field-validator type="stringlength">
+  					<param name="maxLength">12</param>
+  					<param name="minLength">3</param>
+  					<message>Login name must between ${minLength} and ${maxLength} characters!</message>
+  				</field-validator>
+  			</field>
+  			
+  			<field name="loginPwd">
+  				<field-validator type="requiredstring">
+  					<message>Login password is required!</message>
+  				</field-validator>
+  			</field>
+  		</validators>
