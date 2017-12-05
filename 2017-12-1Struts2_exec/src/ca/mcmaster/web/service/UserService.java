@@ -17,4 +17,8 @@ public class UserService {
 	public List<User> getUserList() throws SQLException {
 		return new UserDao().getUserList();
 	}
+
+	public void addUser(User user) throws SQLException {
+		new UserDao().addUser(user);
+	}
 }

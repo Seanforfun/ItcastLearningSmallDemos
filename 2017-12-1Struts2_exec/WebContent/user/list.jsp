@@ -148,82 +148,46 @@ Add
 									<td width="7%" align="center">
 										Delete
 									</td>
-								</tr>
-								
-										<tr onmouseover="this.style.backgroundColor = 'white'"
-											onmouseout="this.style.backgroundColor = '#F5FAFE';">
-											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
-												width="18%">
-												admin
-											</td>
-											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
-												width="17%">
-												&#36229;&#32423;&#31649;&#29702;&#21592;
-											</td>
-											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
-												width="8%">
-												
-											</td>
-											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
-												width="23%">
-												
-											</td>
-											<td style="CURSOR: hand; HEIGHT: 22px" align="center">
-												
-											</td>
-											<td align="center" style="HEIGHT: 22px">
-												<a href="${pageContext.request.contextPath}/user/edit.jsp?userID=15">
-													<img src="${pageContext.request.contextPath}/images/i_edit.gif" border="0" style="CURSOR: hand">
-												</a>
-											</td>
-											<td align="center" style="HEIGHT: 22px">
-												<a href="${pageContext.request.contextPath}/user/view.jsp?userID=15">
-													<img src="${pageContext.request.contextPath}/images/button_view.gif" border="0" style="CURSOR: hand">
-												</a>
-											</td>
-											<td align="center" style="HEIGHT: 22px">
-												<a href="${pageContext.request.contextPath}/user/list.jsp?userID=15">
-													<img src="${pageContext.request.contextPath}/images/i_del.gif" width="16" height="16" border="0" style="CURSOR: hand">
-												</a>
-											</td>
-										</tr>
-										<tr onmouseover="this.style.backgroundColor = 'white'"
-											onmouseout="this.style.backgroundColor = '#F5FAFE';">
-											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
-												width="18%">
-												caocao
-											</td>
-											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
-												width="17%">
-												&#26361;&#25805;
-											</td>
-											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
-												width="8%">
-												&#22899;
-											</td>
-											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
-												width="23%">
-												12312121
-											</td>
-											<td style="CURSOR: hand; HEIGHT: 22px" align="center">
-												&#30740;&#31350;&#29983;
-											</td>
-											<td align="center" style="HEIGHT: 22px">
-												<a href="${pageContext.request.contextPath}/user/edit.jsp?userID=15">
-													<img src="${pageContext.request.contextPath}/images/i_edit.gif" border="0" style="CURSOR: hand">
-												</a>
-											</td>
-											<td align="center" style="HEIGHT: 22px">
-												<a href="${pageContext.request.contextPath}/user/view.jsp?userID=15">
-													<img src="${pageContext.request.contextPath}/images/button_view.gif" border="0" style="CURSOR: hand">
-												</a>
-											</td>
-											<td align="center" style="HEIGHT: 22px">
-												<a href="${pageContext.request.contextPath}/user/list.jsp?userID=15">
-													<img src="${pageContext.request.contextPath}/images/i_del.gif" width="16" height="16" border="0" style="CURSOR: hand">
-												</a>
-											</td>
-										</tr>
+								<s:iterator value="%{list}" var="u">
+									</tr>
+											<tr onmouseover="this.style.backgroundColor = 'white'"
+												onmouseout="this.style.backgroundColor = '#F5FAFE';">
+												<td style="CURSOR: hand; HEIGHT: 22px" align="center"
+													width="18%">
+													<s:property value="#u.loginName"/>
+												</td>
+												<td style="CURSOR: hand; HEIGHT: 22px" align="center"
+													width="17%">
+													<s:property value="#u.username"/>
+												</td>
+												<td style="CURSOR: hand; HEIGHT: 22px" align="center"
+													width="8%">
+													<s:property value="#u.sex"/>
+												</td>
+												<td style="CURSOR: hand; HEIGHT: 22px" align="center"
+													width="23%">
+													<s:property value="#u.telephone"/>
+												</td>
+												<td style="CURSOR: hand; HEIGHT: 22px" align="center">
+													<s:property value="#u.education"/>
+												</td>
+												<td align="center" style="HEIGHT: 22px">
+													<a href="${pageContext.request.contextPath}/user/edit.jsp?userID=15">
+														<img src="${pageContext.request.contextPath}/images/i_edit.gif" border="0" style="CURSOR: hand">
+													</a>
+												</td>
+												<td align="center" style="HEIGHT: 22px">
+													<a href="${pageContext.request.contextPath}/user/view.jsp?userID=15">
+														<img src="${pageContext.request.contextPath}/images/button_view.gif" border="0" style="CURSOR: hand">
+													</a>
+												</td>
+												<td align="center" style="HEIGHT: 22px">
+													<a href="${pageContext.request.contextPath}/user/list.jsp?userID=15">
+														<img src="${pageContext.request.contextPath}/images/i_del.gif" width="16" height="16" border="0" style="CURSOR: hand">
+													</a>
+												</td>
+											</tr>
+										</s:iterator>
 							</table>
 						</td>
 					</tr>
