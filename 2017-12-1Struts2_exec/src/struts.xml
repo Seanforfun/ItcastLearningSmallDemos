@@ -15,6 +15,12 @@
 			<result name="login_input">/login/login.jsp</result>
 			<result name="add_success" type="redirectAction">User_list</result>
 			<result name="add_input">/user/add.jsp</result>
+			<result name="search_input">/user/list.jsp</result>
+			<result name="search_success">/user/list.jsp</result>
+			<result name="delete_success" type="redirectAction">User_list</result>
+			<result name="delete_fail" type="redirectAction">User_list</result>
+			<result name="findUserById_fail">/user/list.jsp</result>
+			<result name="findUserById_success">/user/view.jsp</result>
 		</action>
 	</package>
 </struts>

@@ -31,6 +31,15 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 	private File upload;
 	private String uploadContentType;
 	private String uploadFileName;
+	private String isUpload;
+
+	public String getIsUpload() {
+		return isUpload;
+	}
+
+	public void setIsUpload(String isUpload) {
+		this.isUpload = isUpload;
+	}
 
 	public File getUpload() {
 		return upload;
@@ -71,7 +80,7 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 
 	private UserService service = new UserService();
 
-	@InputConfig(resultName="login_input")
+	@InputConfig(resultName = "login_input")
 	public String login() {
 		try {
 			user = service.login(user);
@@ -109,9 +118,10 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 		return "list_success";
 	}
 
-	@InputConfig(resultName="add_input")
+	@InputConfig(resultName = "add_input")
 	public String add() throws IOException {
-		File dest = new File("D:/upload", RandomUtils.getRandomName(uploadFileName));
+		File dest = new File("D:/upload",
+				RandomUtils.getRandomName(uploadFileName));
 		FileUtils.copyFile(upload, dest);
 		this.getModel().setPath(dest.toString());
 		this.getModel().setFilename(uploadFileName);
@@ -125,5 +135,70 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 			return "add_input";
 		}
 		return "add_success";
+	}
+
+	@InputConfig(resultName = "search_input")
+	public String search() {
+		boolean hasResume = false;
+		if (this.isUpload.equals("yes")) {
+			hasResume = true;
+		}
+		UserService service = new UserService();
+		try {
+			System.out.println(this.getModel().toString());
+			list = service.searchUser(this.getModel(), hasResume);
+			if (null == list || list.size() == 0) {
+				this.addActionError("No matched user found!");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// throw new SearchUserException(e.getMessage());
+			this.addActionError("Search User Faild! System error!");
+		}
+		return "search_success";
+	}
+
+	public String delete() {
+		UserService service = new UserService();
+		try {
+			User result = service.findUserById(user.getUserID());
+			if (result == null) {
+				this.addActionError("Delete User Faild! System error!");
+				return "delete_fail";
+			}else{
+				if(result.getPath() != null && result.getPath().trim().length() != 0){
+					this.removeResume(result);
+				}
+			}
+			service.deleteUser(this.getModel().getUserID());
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// throw new UserDeleteException(e.getMessage());
+			this.addActionError("Delete User Faild! System error!");
+		}
+		return "delete_success";
+	}
+
+	private void removeResume(User result) {
+		File resume = new File(result.getPath());
+		if(resume.exists()){
+			resume.delete();
+		}
+	}
+	
+	public String findUserById(){
+		UserService service = new UserService();
+		try {
+			user = service.findUserById(user.getUserID());
+			if(null == user){
+				this.addActionError("Find User Faild! System error!");
+				return "findUserById_fail";
+			}
+			ActionContext context = ActionContext.getContext();
+			context.put("info", user);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "findUserById_success";
 	}
 }

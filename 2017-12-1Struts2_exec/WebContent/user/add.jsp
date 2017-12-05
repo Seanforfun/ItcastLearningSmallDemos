@@ -30,6 +30,13 @@
 						</strong>
 					</td>
 				</tr>
+				<tr>
+					<td class="ta_01" align="center" bgColor="#afd1f3" colSpan="4"
+						height="26">
+						<s:fielderror/>
+						<s:actionerror/>
+					</td>
+				</tr>
 
 				<tr>
 					<td width="18%" align="center" bgColor="#f5fafe" class="ta_01">

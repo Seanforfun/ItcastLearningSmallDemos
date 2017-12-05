@@ -13,14 +13,20 @@
 		</script>
 	</HEAD>
 	<body>
-		<s:debug/>
 		<br>
-		<form id="Form1" name="Form1" action="${pageContext.request.contextPath}/user/list.jsp" method="post">
+		<s:debug/>
+		<s:form id="Form1" name="Form1" action="User_search" method="post" namespace="/">
 			<table cellSpacing="1" cellPadding="0" width="100%" align="center" bgColor="#f5fafe" border="0">
 				<TBODY>
 					<tr>
 						<td class="ta_01" align="center" bgColor="#afd1f3">
 							<strong>User information</strong>
+						</td>
+					</tr>
+					<tr>
+						<td class="ta_01" align="center" bgColor="#afd1f3">
+							<s:fielderror/>
+							<s:actionerror/>
 						</td>
 					</tr>
 					<tr>
@@ -31,21 +37,13 @@
 										Username:
 									</td>
 									<td class="ta_01" bgColor="#ffffff">
-										<input type="text" name="userName" size="15" value="" id="Form1_userName" class="bg"/>
+										<s:textfield name="username" size="15" value="" id="Form1_userName" cssClass="bg"/>
 									</td>
 									<td height="22" align="center" bgColor="#f5fafe" class="ta_01">
 										Sex:
 									</td>
 									<td class="ta_01" bgColor="#ffffff">
-										
-										<select name="sex" id="sex">
-										    <option value="">--Please select a sex--</option>
-										    <option value="male">male</option>
-										    <option value="female">female</option>
-										
-										
-										</select>
-
+										<s:select list="{'male','female'}" id="sex" name="sex" headerKey="" headerValue="--Please select a sex--"/>
 									</td>
 								</tr>
 								<tr>
@@ -53,32 +51,13 @@
 										Education：
 									</td>
 									<td class="ta_01" bgColor="#ffffff">
-										
-										<select name="education" id="education">
-										    <option value="">--Please select the education level--</option>
-										    <option value="phd">phd</option>
-										    <option value="master">master</option>
-										    <option value="undergraduate">undergraduate</option>
-										    <option value="college">college</option>
-										    <option value="highschool">high school</option>
-										
-										
-										</select>
-
+										<s:select list="{'phd','master','undergraduate','college','highschool'}" name="education" id="education" headerKey="" headerValue="--Please select the education level--"/>
 									</td>
 									<td height="22" align="center" bgColor="#f5fafe" class="ta_01">
 										resume upload
 									</td>
 									<td class="ta_01" bgColor="#ffffff">
-										
-										<select name="isUpload" id="isUpload">
-										    <option value="">--Please select--</option>
-										    <option value="1">yes</option>
-										    <option value="2">no</option>
-										
-										
-										</select>
-
+										<s:select list="{'yes','no'}" name="isUpload" value="isUpload" headerKey="" headerValue="--Please select--"/>
 									</td>
 								</tr>
 								<tr>
@@ -90,13 +69,9 @@
 									</td>
 									<td align="right" bgColor="#ffffff" class="ta_01"><br><br></td>
 									<td align="right" bgColor="#ffffff" class="ta_01">
-										<button type="submit" id="search" name="search" value="Search" class="button_view">
-Search
-</button>
-
+										<s:submit  id="search" name="search" value="Search" cssClass="button_view"/>
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="reset" name="reset" value="Reset" class="button_view"/>
-
+										<s:reset name="reset" value="Reset" cssClass="button_view"/>
 									</td>
 								</tr>
 							</table>
@@ -177,14 +152,16 @@ Add
 													</a>
 												</td>
 												<td align="center" style="HEIGHT: 22px">
-													<a href="${pageContext.request.contextPath}/user/view.jsp?userID=15">
+													<s:a namespace="/" action="User_findUserById">
+														<s:param name="userID" value="%{#u.userID}"/>
 														<img src="${pageContext.request.contextPath}/images/button_view.gif" border="0" style="CURSOR: hand">
-													</a>
+													</s:a>
 												</td>
 												<td align="center" style="HEIGHT: 22px">
-													<a href="${pageContext.request.contextPath}/user/list.jsp?userID=15">
+													<s:a namespace="/" action="User_delete">
+														<s:param name="userID" value="%{#u.userID}"/>
 														<img src="${pageContext.request.contextPath}/images/i_del.gif" width="16" height="16" border="0" style="CURSOR: hand">
-													</a>
+													</s:a>
 												</td>
 											</tr>
 										</s:iterator>
@@ -193,7 +170,7 @@ Add
 					</tr>
 				</TBODY>
 			</table>
-		</form>
+		</s:form>
 	</body>
 </HTML>
 

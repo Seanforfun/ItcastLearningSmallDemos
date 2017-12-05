@@ -37,4 +37,30 @@ public class UserDao {
 				user.getPath(), user.getFilename(), user.getRemark());
 		return;
 	}
+
+	public List<User> searchUser(User model, boolean hasResume) throws SQLException {
+		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = null;
+		if(!hasResume){
+			sql = "select * from user where username=? and sex=? and education=? and filename is null";
+		}else{
+			sql = "select * from user where username=? and sex=? and education=? and filename is not null";
+		}
+		
+		List<User> list = runner.query(sql, new BeanListHandler<User>(User.class), model.getUsername(), model.getSex(), model.getEducation());
+		return list;
+	}
+
+	public void deleteUser(int userID) throws SQLException {
+		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "delete from user where userID=?";
+		runner.update(sql, userID);
+	}
+
+	public User findUserById(int userID) throws SQLException {
+		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "select * from user where userID = ?";
+		User result = runner.query(sql, new BeanHandler<User>(User.class), userID);
+		return result;
+	}
 }

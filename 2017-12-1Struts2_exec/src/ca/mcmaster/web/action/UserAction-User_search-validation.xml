@@ -10,15 +10,21 @@
   				</field-validator>
   			</field>
   			
-  			<field name="loginName">
+  			<field name="sex">
   				<field-validator type="requiredstring">
-  					<message>loginName is required!</message>
+  					<message>Sex is required!</message>
   				</field-validator>
   			</field>
   			
-  			<field name="loginPwd">
+  			<field name="education">
   				<field-validator type="requiredstring">
-  					<message>Password is required!</message>
+  					<message>Education is required!</message>
+  				</field-validator>
+  			</field>
+  			
+  			<field name="isUpload">
+  				<field-validator type="requiredstring">
+  					<message>Resume state is required!</message>
   				</field-validator>
   			</field>
   		</validators>

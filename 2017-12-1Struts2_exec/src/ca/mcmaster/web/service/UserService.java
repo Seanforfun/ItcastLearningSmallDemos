@@ -21,4 +21,17 @@ public class UserService {
 	public void addUser(User user) throws SQLException {
 		new UserDao().addUser(user);
 	}
+
+	public List<User> searchUser(User model, boolean hasResume) throws SQLException {
+		return new UserDao().searchUser(model, hasResume); 
+	}
+
+	public void deleteUser(int userID) throws SQLException {
+		new UserDao().deleteUser(userID);
+		return;
+	}
+
+	public User findUserById(int userID) throws SQLException {
+		return new UserDao().findUserById(userID);
+	}
 }

@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <HTML>
 	<HEAD>
 		<meta http-equiv="Content-Language" content="zh-cn">
@@ -13,78 +14,78 @@
 				<tr>
 					<td class="ta_01" align="center" bgColor="#afd1f3" colSpan="4"
 						height="26">
-						<strong><STRONG>查看用户</STRONG>
+						<strong><STRONG>User Information</STRONG>
 						</strong>
 					</td>
 				</tr>
 
 				<tr>
 					<td width="18%" align="center" bgColor="#f5fafe" class="ta_01">
-						登录名：
+						Loginname:
 					</td>
 					<td class="ta_01" bgColor="#ffffff">
-						caocao
+						<s:property value="#info.loginName"/>
 					</td>
 					<td align="center" bgColor="#f5fafe" class="ta_01">
-						用户姓名：
+						Username:
 					</td>
 					<td class="ta_01" bgColor="#ffffff">
-						曹操
+						<s:property value="#info.username"/>
 					</td>
 				</tr>
 				
 				<tr>
 					<td align="center" bgColor="#f5fafe" class="ta_01">
-						性别：
+						Sex:
 					</td>
 					<td class="ta_01" bgColor="#ffffff">
-						女
+						<s:property value="#info.sex"/>
 					</td>
 					<td align="center" bgColor="#f5fafe" class="ta_01">
-						学历：
+						Education:
 					</td>
 					<td class="ta_01" bgColor="#ffffff">
-						研究生
+						<s:property value="#info.education"/>
 					</td>
 				</tr>
 				<tr>
 					<td align="center" bgColor="#f5fafe" class="ta_01">
-						出生日期：
+						Date of birth:
 					</td>
 					<td class="ta_01" bgColor="#ffffff">
-						2012-03-01
+						<s:property value="#info.birthday"/>
 					</td>
 					<td align="center" bgColor="#f5fafe" class="ta_01">
-						电话：
+						Telephone:
 					</td>
 					<td class="ta_01" bgColor="#ffffff">
-						12312121
+						<s:property value="#info.telephone"/>
 					</td>
 				</tr>
 				<tr>
 					<td align="center" bgColor="#f5fafe" class="ta_01">
-						兴趣爱好：
+						Hobbies:
 					</td>
 					<td class="ta_01" bgColor="#ffffff" colSpan="3">
-						 看电影, 旅游
+						<s:property value="#info.interest"/>
 					</td>
 				</tr>
 				<tr>
 					<td align="center" bgColor="#f5fafe" class="ta_01">
-						简历资料：
+						Resume:
 					</td>
 					<td class="ta_01" bgColor="#ffffff" colSpan="3">
 						<a href="#" onclick="openWindow('user/userAction_download.do?userID=17','700','400')" class="cl_01">
-						     费用报销单模板.doc
+						    <s:property value="#info.filename"/>
 						</a>
 					</td>
 				</tr>
 				<TR>
 					<TD class="ta_01" align="center" bgColor="#f5fafe">
-						备注：
+						Remark:
 					</TD>
 					<TD class="ta_01" bgColor="#ffffff" colSpan="3">
-						的
+						<s:property value="#info.remark"/>
 					</TD>
 				</TR>
 				<TR>
@@ -95,7 +96,7 @@
 				<TR>
 					<td class="ta_01" style="WIDTH: 100%" align="right" bgColor="#f5fafe" colSpan="4">
 						<FONT face="宋体">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>
-						<INPUT class="button_ok" type="button" onclick="history.go(-1)" value="返回"/>
+						<INPUT class="button_ok" type="button" onclick="history.go(-1)" value="return"/>
 						<span id="Label1"></span>
 					</td>
 				</TR>
