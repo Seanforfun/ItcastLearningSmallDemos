@@ -30,7 +30,7 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 	private List<User> list = new ArrayList<User>();
 	private File upload;
 	private String uploadContentType;
-	private String uploadFilename;
+	private String uploadFileName;
 
 	public File getUpload() {
 		return upload;
@@ -44,12 +44,12 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 		this.uploadContentType = uploadContentType;
 	}
 
-	public String getUploadFilename() {
-		return uploadFilename;
+	public String getUploadFileName() {
+		return uploadFileName;
 	}
 
-	public void setUploadFilename(String uploadFilename) {
-		this.uploadFilename = uploadFilename;
+	public void setUploadFileName(String uploadFilename) {
+		this.uploadFileName = uploadFilename;
 	}
 
 	public void setUpload(File upload) {
@@ -111,10 +111,10 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 
 	@InputConfig(resultName="add_input")
 	public String add() throws IOException {
-		File dest = new File("D:/upload", RandomUtils.getRandomName(uploadFilename));
+		File dest = new File("D:/upload", RandomUtils.getRandomName(uploadFileName));
 		FileUtils.copyFile(upload, dest);
 		this.getModel().setPath(dest.toString());
-		this.getModel().setFilename(uploadFilename);
+		this.getModel().setFilename(uploadFileName);
 		UserService service = new UserService();
 		try {
 			service.addUser(user);
