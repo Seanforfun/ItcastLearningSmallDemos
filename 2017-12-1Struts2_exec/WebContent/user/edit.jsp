@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <HTML>
 	<HEAD>
 		<meta http-equiv="Content-Language" content="zh-cn">
@@ -19,118 +20,93 @@
 		});
 	</script>
 	<body>
-		<form id="userAction_save_do" name="Form1" action="${pageContext.request.contextPath}/user/list.jsp" method="post" enctype="multipart/form-data">
+		<s:form id="userAction_save_do" name="Form1" namespace="/" action="User_edit" method="post" enctype="multipart/form-data">
 			&nbsp;
 			<table cellSpacing="1" cellPadding="5" width="100%" align="center" bgColor="#eeeeee" style="border: 1px solid #8ba7e3" border="0">
-				<input type="hidden" name="userID" value="17" id="userID"/>
-				<input type="hidden" name="path" value="D:\apache-tomcat-6.0.18\webapps\itcastStrutsProject\upload/2012/03/29/&#36153;&#29992;&#25253;&#38144;&#21333;&#27169;&#26495;.doc" id="path"/>
-				<input type="hidden" name="filename" value="&#36153;&#29992;&#25253;&#38144;&#21333;&#27169;&#26495;.doc" id="filename"/>
+				<s:hidden name="userID" value="%{model.userID}" id="userID"/>
 				<tr>
 					<td class="ta_01" align="center" bgColor="#afd1f3" colSpan="4"
 						height="26">
-						<strong><STRONG>编辑用户</STRONG>
+						<strong><STRONG>Edit user</STRONG>
 						</strong>
 					</td>
 				</tr>
-
+				<tr>
+					<s:actionerror/>
+					<s:fielderror />
+				</tr>
 				<tr>
 					<td width="18%" align="center" bgColor="#f5fafe" class="ta_01">
-						登录名：
+						Login name:
 					</td>
 					<td class="ta_01" bgColor="#ffffff" colspan="3">
-						<input type="text" name="logonName" value="caocao" id="userAction_save_do_logonName" class="bg"/>
+						<s:textfield name="loginName" value="%{model.loginName}" id="userAction_save_do_logonName" cssClass="bg" />
 					</td>
 				</tr>
 				<tr>
 					<td align="center" bgColor="#f5fafe" class="ta_01">
-						 密码：
+						 Password:
 					</td>
 					<td class="ta_01" bgColor="#ffffff">
-						<input type="password" name="logonPwd" value="123" id="logonPwd"/>
+						<s:password name="loginPwd" value="%{model.loginPwd}" id="logonPwd" disabled="false"/>
 					</td>
 					<td align="center" bgColor="#f5fafe" class="ta_01">
-						用户姓名：
+						Username:
 					</td>
 					<td class="ta_01" bgColor="#ffffff">
-						<input type="text" name="userName" value="&#26361;&#25805;" id="userAction_save_do_userName" class="bg"/>
+						<s:textfield name="username" value="%{model.username}" id="userAction_save_do_userName" cssClass="bg"/>
 					</td>
 				</tr>
 				<tr>
 					<td align="center" bgColor="#f5fafe" class="ta_01">
-						性别：
+						Sex:
 					</td>
 					<td class="ta_01" bgColor="#ffffff">
-						<input type="radio" name="sex" id="sex男" value="男"/><label for="sex男">男</label>
-						<input type="radio" name="sex" id="sex女" checked="checked" value="女"/><label for="sex女">女</label>
-
+						<s:radio list="{'male','female'}" name="sex" value="%{model.sex}"/>
 					</td>
 					<td align="center" bgColor="#f5fafe" class="ta_01">
-						学历：
+						Education:
 					</td>
 					<td class="ta_01" bgColor="#ffffff">
-						
-						
-						<select name="education" id="education">
-						    <option value=""
-						    >--选择学历--</option>
-						    <option value="博士">博士</option>
-						    <option value="硕士">硕士</option>
-						    <option value="研究生" selected="selected">研究生</option>
-						    <option value="本科">本科</option>
-						    <option value="专科">专科</option>
-						    <option value="高中">高中</option>
-						
-						
-						</select>
-
+						<s:select list="{'Phd', 'Master', 'Undergraduate','College','HighSchool'}" value="%{model.education}" name="education" id="education"  headerKey="" headerValue="----Please select education----"/>
 					</td>
 				</tr>
 				<tr>
 					<td align="center" bgColor="#f5fafe" class="ta_01">
-						出生日期：
+						Date of birth
 					</td>
 					<td class="ta_01" bgColor="#ffffff">
-						<input type="text" name="birthday" size="20" value="2012-03-01" readonly="readonly" id="birthday"/>
+						<s:textfield name="birthday" size="20" value="%{model.birthday}" readonly="readonly" id="birthday"/>
 					</td>
 					<td align="center" bgColor="#f5fafe" class="ta_01">
-						电话：
+						Telephone:
 					</td>
 					<td class="ta_01" bgColor="#ffffff">
-						<input type="text" name="telephone" value="12312121" id="telephone"/>
+						<s:textfield name="telephone" value="%{model.telephone}" id="telephone"/>
 					</td>
 				</tr>
 				<tr>
 					<td align="center" bgColor="#f5fafe" class="ta_01">
-						兴趣爱好：
+						Hobbies:
 					</td>
 					<td class="ta_01" bgColor="#ffffff" colSpan="3">
-						 <input type="checkbox" name="interest" value="看电影" id="interest-1" checked="checked"/>
-						<label for="interest-1" class="checkboxLabel">看电影</label>
-						<input type="checkbox" name="interest" value="旅游" id="interest-2" checked="checked"/>
-						<label for="interest-2" class="checkboxLabel">旅游</label>
-						<input type="checkbox" name="interest" value="健身" id="interest-3"/>
-						<label for="interest-3" class="checkboxLabel">健身</label>
-						<input type="checkbox" name="interest" value="购物" id="interest-4"/>
-						<label for="interest-4" class="checkboxLabel">购物</label>
-						<input type="checkbox" name="interest" value="睡觉" id="interest-5"/>
-						<label for="interest-5" class="checkboxLabel">睡觉</label>
-						<input type="hidden" id="__multiselect_userAction_save_do_interest" name="__multiselect_interest" value="" /> 
+						<s:checkboxlist list="{'Watch movie','Tourism','Workout','Shopping','Sleeping'}" value="%{model.interest}" name="interest"/> 
 					</td>
 				</tr>
 				<tr>
 					<td align="center" bgColor="#f5fafe" class="ta_01">
-						简历资料：
+						Resume:
 					</td>
 					<td class="ta_01" bgColor="#ffffff" colSpan="3">
-						<input type="file" name="upload" size="30" value="" id="userAction_save_do_upload"/>
+						<s:file name="upload" size="30" value="" id="userAction_save_do_upload"/>
 					</td>
 				</tr>
 				<TR>
 					<TD class="ta_01" align="center" bgColor="#f5fafe">
-						备注：
+						Remark:
 					</TD>
 					<TD class="ta_01" bgColor="#ffffff" colSpan="3">
-						<textarea name="remark" cols="30" rows="3" id="userAction_save_do_remark" style="WIDTH: 96%">&#30340;</textarea>
+						<s:textarea name="remark" cols="30" rows="3" id="userAction_save_do_remark" style="WIDTH: 96%" value="%{model.remark}"/>
 					</TD>
 				</TR>
 				<TR>
@@ -141,20 +117,18 @@
 				<tr>
 					<td class="ta_01" style="WIDTH: 100%" align="center"
 						bgColor="#f5fafe" colSpan="4">
-						<button type="submit" id="userAction_save_do_submit" name="submit" value="&#30830;&#23450;" class="button_ok">
-							&#30830;&#23450;
-						</button>
+						<s:submit id="userAction_save_do_submit" name="submit" value="Submit" cssClass="button_ok"/>
 
 						<FONT face="宋体">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>
-						<button type="reset" value="&#37325;&#32622;" class="button_cancel">&#37325;&#32622;</button>
+						<button type="reset" value="&#37325;&#32622;" class="button_cancel">Reset</button>
 
 						<FONT face="宋体">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>
-						<INPUT class="button_ok" type="button" onclick="history.go(-1)" value="返回"/>
+						<INPUT class="button_ok" type="button" onclick="history.go(-1)" value="Return"/>
 						<span id="Label1"></span>
 					</td>
 				</tr>
 			</table>
-		</form>
+		</s:form>
 
 
 

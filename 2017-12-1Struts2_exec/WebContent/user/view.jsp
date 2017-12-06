@@ -6,6 +6,11 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<LINK href="${pageContext.request.contextPath}/css/Style.css" type="text/css" rel="stylesheet">
 		<script language="javascript" src="${pageContext.request.contextPath}/js/public.js"></script>
+		<script type="text/javascript">
+			function downloadFile(userID, filename){
+				location.href="{$pageContext.request.contextPath}/User_download?userID=" + userID + "&filename="+filename;
+			};
+		</script>
 	</HEAD>
 	<body>
 		<form id="userAction_save_do" name="Form1" action="${pageContext.request.contextPath}/user/userAction_save.do" method="post" enctype="multipart/form-data">
@@ -75,7 +80,7 @@
 						Resume:
 					</td>
 					<td class="ta_01" bgColor="#ffffff" colSpan="3">
-						<a href="#" onclick="openWindow('user/userAction_download.do?userID=17','700','400')" class="cl_01">
+						<a href="javascript:void(0)"  onclick="downloadFile('<s:property value="#info.userID"/>','<s:property value="#info.filename"/>')" class="cl_01" >
 						    <s:property value="#info.filename"/>
 						</a>
 					</td>

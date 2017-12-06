@@ -38,16 +38,19 @@ public class UserDao {
 		return;
 	}
 
-	public List<User> searchUser(User model, boolean hasResume) throws SQLException {
+	public List<User> searchUser(User model, boolean hasResume)
+			throws SQLException {
 		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
 		String sql = null;
-		if(!hasResume){
+		if (!hasResume) {
 			sql = "select * from user where username=? and sex=? and education=? and filename is null";
-		}else{
+		} else {
 			sql = "select * from user where username=? and sex=? and education=? and filename is not null";
 		}
-		
-		List<User> list = runner.query(sql, new BeanListHandler<User>(User.class), model.getUsername(), model.getSex(), model.getEducation());
+
+		List<User> list = runner.query(sql, new BeanListHandler<User>(
+				User.class), model.getUsername(), model.getSex(), model
+				.getEducation());
 		return list;
 	}
 
@@ -60,7 +63,18 @@ public class UserDao {
 	public User findUserById(int userID) throws SQLException {
 		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
 		String sql = "select * from user where userID = ?";
-		User result = runner.query(sql, new BeanHandler<User>(User.class), userID);
+		User result = runner.query(sql, new BeanHandler<User>(User.class),
+				userID);
 		return result;
+	}
+
+	public void modifyUser(User user) throws SQLException {
+		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "update user set USERNAME=?,  LOGINNAME=?, LOGINPWD=?, sex=?, birthday=?, education = ?, telephone=?, interest=?, path =?, filename=?, remark=? where userID = ?";
+		runner.update(sql, user.getUsername(), user.getLoginName(),
+				user.getLoginPwd(), user.getSex(), user.getBirthday(),
+				user.getEducation(), user.getTelephone(), user.getInterest(),
+				user.getPath(), user.getFilename(), user.getRemark(),
+				user.getUserID());
 	}
 }

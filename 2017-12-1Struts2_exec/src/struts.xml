@@ -4,6 +4,7 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
+	<constant name="struts.multipart.maxSize" value="20971520"></constant>
 	<constant name="struts.ui.theme" value="simple"></constant>
 	<package name="User" namespace="/" extends="struts-default">
 		<global-results>
@@ -20,7 +21,17 @@
 			<result name="delete_success" type="redirectAction">User_list</result>
 			<result name="delete_fail" type="redirectAction">User_list</result>
 			<result name="findUserById_fail">/user/list.jsp</result>
+			<result name="download_findUserById_fail">/user/list.jsp</result>
 			<result name="findUserById_success">/user/view.jsp</result>
+			<result name="download_success" type="stream">
+				<param name="contentType">${contentType}</param>
+				<param name="contentDisposition">attachment;filename=${downloadFilename}</param>
+				<param name="inputStream">${inputStream}</param>
+			</result>
+			<result name="editShow_findUserById_fail">/user/list.jsp</result>
+			<result name="edit_findUserById_fail">/user/edit.jsp</result>
+			<result name="editShow_findUserById_success">/user/edit.jsp</result>
+			<result name="edit_findUserById_success" type="redirectAction">User_list</result>
 		</action>
 	</package>
 </struts>

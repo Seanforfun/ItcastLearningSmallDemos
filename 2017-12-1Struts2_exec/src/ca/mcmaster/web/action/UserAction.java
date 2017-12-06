@@ -1,7 +1,10 @@
 package ca.mcmaster.web.action;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,21 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 	private String uploadContentType;
 	private String uploadFileName;
 	private String isUpload;
+	private InputStream inputStream;
+	private String downloadFilename;
+	private String contentType;
+
+	public String getDownloadFilename() {
+		return downloadFilename;
+	}
+
+	public String getContentType() {
+		return this.contentType;
+	}
+
+	public InputStream getInputStream() throws FileNotFoundException {
+		return this.inputStream;
+	}
 
 	public String getIsUpload() {
 		return isUpload;
@@ -118,13 +136,17 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 		return "list_success";
 	}
 
-	@InputConfig(resultName = "add_input")
-	public String add() throws IOException {
+	private void saveResume() throws IOException {
 		File dest = new File("D:/upload",
 				RandomUtils.getRandomName(uploadFileName));
 		FileUtils.copyFile(upload, dest);
 		this.getModel().setPath(dest.toString());
 		this.getModel().setFilename(uploadFileName);
+	}
+
+	@InputConfig(resultName = "add_input")
+	public String add() throws IOException {
+		saveResume();
 		UserService service = new UserService();
 		try {
 			service.addUser(user);
@@ -165,8 +187,9 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 			if (result == null) {
 				this.addActionError("Delete User Faild! System error!");
 				return "delete_fail";
-			}else{
-				if(result.getPath() != null && result.getPath().trim().length() != 0){
+			} else {
+				if (result.getPath() != null
+						&& result.getPath().trim().length() != 0) {
 					this.removeResume(result);
 				}
 			}
@@ -181,16 +204,16 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 
 	private void removeResume(User result) {
 		File resume = new File(result.getPath());
-		if(resume.exists()){
+		if (resume.exists()) {
 			resume.delete();
 		}
 	}
-	
-	public String findUserById(){
+
+	public String findUserById() {
 		UserService service = new UserService();
 		try {
 			user = service.findUserById(user.getUserID());
-			if(null == user){
+			if (null == user) {
 				this.addActionError("Find User Faild! System error!");
 				return "findUserById_fail";
 			}
@@ -200,5 +223,59 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 			e.printStackTrace();
 		}
 		return "findUserById_success";
+	}
+
+	public String download() throws FileNotFoundException {
+		try {
+			user = service.findUserById(user.getUserID());
+			if (null == user) {
+				this.addActionError("Find User Faild! System error!");
+				return "download_findUserById_fail";
+			}
+			inputStream = new FileInputStream(new File(user.getPath()));
+			downloadFilename = user.getFilename();
+			contentType = ServletActionContext.getServletContext().getMimeType(
+					user.getFilename());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return "download_success";
+	}
+
+	public String editShow() {
+		try {
+			user = service.findUserById(user.getUserID());
+			if (null == user) {
+				this.addActionError("Find User Faild! System error!");
+				return "editShow_findUserById_fail";
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "editShow_findUserById_success";
+	}
+
+	public String edit() throws IOException {
+		try {
+			User pastInfo = service.findUserById(user.getUserID());
+			if (null == pastInfo) {
+				this.addActionError("Find User Faild! System error!");
+				return "edit_findUserById_fail";
+			}
+			if (pastInfo.getFilename() != null
+					&& !pastInfo.getFilename().equals(user.getFilename())) {
+				removeResume(pastInfo);
+			}
+			if (uploadFileName != null) {
+				saveResume();
+			}
+			UserService service = new UserService();
+			service.modifyUser(user);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return "edit_findUserById_success";
 	}
 }

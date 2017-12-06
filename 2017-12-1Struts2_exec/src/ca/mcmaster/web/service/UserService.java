@@ -34,4 +34,8 @@ public class UserService {
 	public User findUserById(int userID) throws SQLException {
 		return new UserDao().findUserById(userID);
 	}
+
+	public void modifyUser(User user) throws SQLException {
+		new UserDao().modifyUser(user);
+	}
 }

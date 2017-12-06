@@ -147,9 +147,10 @@ Add
 													<s:property value="#u.education"/>
 												</td>
 												<td align="center" style="HEIGHT: 22px">
-													<a href="${pageContext.request.contextPath}/user/edit.jsp?userID=15">
+													<s:a namespace="/" action="User_editShow">
+														<s:param name="userID" value="%{#u.userID}"/>
 														<img src="${pageContext.request.contextPath}/images/i_edit.gif" border="0" style="CURSOR: hand">
-													</a>
+													</s:a>
 												</td>
 												<td align="center" style="HEIGHT: 22px">
 													<s:a namespace="/" action="User_findUserById">
