@@ -18,6 +18,7 @@ import org.apache.struts2.ServletActionContext;
 import ca.mcmaster.domain.User;
 import ca.mcmaster.exception.FindUserException;
 import ca.mcmaster.exception.LoginException;
+import ca.mcmaster.exception.SearchUserException;
 import ca.mcmaster.utils.RandomUtils;
 import ca.mcmaster.web.service.UserService;
 
@@ -128,22 +129,22 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 		return "login_success";
 	}
 
-	public String list() {
+	public String list() throws FindUserException {
 		try {
 			list = service.getUserList();
 			if (null == list) {
 				this.addActionError("No user found!");
 				return "login_success";
 			}
-			// ValueStack vs = ActionContext.getContext().getValueStack();
-			// vs.set("userlist", list);
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new FindUserException(e.getMessage());
-			this.addActionError("Find User Faild! System error!");
-			return "login_success";
+			this.removeLogin();
+			throw new FindUserException(e.getMessage());
 		}
 		return "list_success";
+	}
+
+	private void removeLogin() {
+		ServletActionContext.getRequest().getSession().setAttribute("userInfo", null);
 	}
 
 	private void saveResume() throws IOException {
@@ -184,7 +185,7 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			// throw new SearchUserException(e.getMessage());
+//			throw new SearchUserException(e.getMessage());
 			this.addActionError("Search User Faild! System error!");
 		}
 		return "search_success";
@@ -206,7 +207,7 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 			service.deleteUser(this.getModel().getUserID());
 		} catch (SQLException e) {
 			e.printStackTrace();
-			// throw new UserDeleteException(e.getMessage());
+//			throw new UserDeleteException(e.getMessage());
 			this.addActionError("Delete User Faild! System error!");
 		}
 		return "delete_success";
