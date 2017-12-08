@@ -90,7 +90,7 @@
 						Hobbies:
 					</td>
 					<td class="ta_01" bgColor="#ffffff" colSpan="3">
-						<s:checkboxlist list="{'Watch movie','Tourism','Workout','Shopping','Sleeping'}" value="%{model.interest}" name="interest"/> 
+						<s:checkboxlist list="{'Watch movie','Tourism','Workout','Shopping','Sleeping'}" value="%{interestsArray}"  name="interest"/> 
 					</td>
 				</tr>
 				<tr>

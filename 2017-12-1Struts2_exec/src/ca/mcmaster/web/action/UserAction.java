@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -38,6 +39,15 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 	private InputStream inputStream;
 	private String downloadFilename;
 	private String contentType;
+	private String[] interestsArray;
+
+	public String[] getInterestsArray() {
+		return interestsArray;
+	}
+
+	public void setInterestsArray(String[] interestsArray) {
+		this.interestsArray = interestsArray;
+	}
 
 	public String getDownloadFilename() {
 		return downloadFilename;
@@ -250,6 +260,10 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 				this.addActionError("Find User Faild! System error!");
 				return "editShow_findUserById_fail";
 			}
+			String interests = user.getInterest();
+			if(interests != null && interests.trim().length() != 0){
+				interestsArray = interests.split(", ");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -263,12 +277,16 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 				this.addActionError("Find User Faild! System error!");
 				return "edit_findUserById_fail";
 			}
-			if (pastInfo.getFilename() != null
+			
+			if (pastInfo.getFilename() != null && uploadFileName != null
 					&& !pastInfo.getFilename().equals(user.getFilename())) {
 				removeResume(pastInfo);
 			}
 			if (uploadFileName != null) {
 				saveResume();
+			}else{
+				user.setPath(pastInfo.getPath());
+				user.setFilename(pastInfo.getFilename());
 			}
 			UserService service = new UserService();
 			service.modifyUser(user);
