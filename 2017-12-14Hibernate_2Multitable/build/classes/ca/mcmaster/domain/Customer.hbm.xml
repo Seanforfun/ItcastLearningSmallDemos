@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	
+	<hibernate-mapping>
+		<class name="ca.mcmaster.domain.Customer" table="customer">
+			<id name="cid" column="cid">
+				<generator class="native" />
+			</id>
+			<property name="name" column="name" length="50"/>
+			<set name="orders" cascade="save-update,delete" inverse="true">
+				<key column="cno"></key>
+				<one-to-many class="ca.mcmaster.domain.Order"/>
+			</set>
+		</class>
+	</hibernate-mapping>

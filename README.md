@@ -14,3 +14,5 @@ Watch vedios from itcast education. This repository is used to save all of the s
 #6 Use Struts2 to create a simple user management system. Most of the front page design are from the source code from itcast education. I will do the rest of the back-end services.(2017-12-1)
 
 #7 Try to build Hibernate running environment and realize a basic insert operation.(2017-12-11) 
+
+#8 Use Hibernate to test multi-tables operations.
