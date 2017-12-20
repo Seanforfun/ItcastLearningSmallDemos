@@ -15,4 +15,6 @@ Watch vedios from itcast education. This repository is used to save all of the s
 
 #7 Try to build Hibernate running environment and realize a basic insert operation.(2017-12-11) 
 
-#8 Use Hibernate to test multi-tables operations.
+#8 Use Hibernate to test multi-tables operations.(2017-12-14)
+
+#9 Conbination of Struts2 and Hibernate. Use Struts2 as the MVC side and use Hibernate as dao side. Realize a simple one to many relationship table. Use jsp and ajax as the front side.(2017-12-19)
