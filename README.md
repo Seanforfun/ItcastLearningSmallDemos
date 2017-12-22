@@ -20,3 +20,5 @@ Watch vedios from itcast education. This repository is used to save all of the s
 #9 Conbination of Struts2 and Hibernate. Use Struts2 as the MVC side and use Hibernate as dao side. Realize a simple one to many relationship table. Use jsp and ajax as the front side.(2017-12-19)
 
 #10 Test Different features of Spring(2017-12-21)
+
+#11 Test configure spring beans by annotation method. WARNING:Spring3.x annotaion method only supports jdk 7 or below! Otherwise there will be a java.lang.illegalargumentexception!(2017-12-22) 
