@@ -63,6 +63,6 @@ public class BeanDemoImpl implements BeanDemo, BeanNameAware, BeanFactoryAware,
 	}
 
 	public void mydestroy(){
-		System.out.println("Step10:destroy-method='mydestroy'");
+		System.out.println("Step11:destroy-method='mydestroy'");
 	}
 }

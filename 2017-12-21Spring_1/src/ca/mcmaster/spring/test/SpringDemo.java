@@ -36,7 +36,7 @@ public class SpringDemo {
 	@Test
 	public void demo3(){
 		ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-		BeanDemoImpl bean =  (BeanDemoImpl) applicationContext.getBean("beanDemo");
+		BeanDemo bean =  (BeanDemo) applicationContext.getBean("beanDemo");
 		bean.say();
 		applicationContext.close();
 	}
