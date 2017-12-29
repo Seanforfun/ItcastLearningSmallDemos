@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
@@ -15,7 +16,7 @@ import org.aspectj.lang.annotation.Before;
  */
 @Aspect
 public class MyAspect {
-	@Before("execution(* ca.mcmaster.vo.UserDao.add(..))")
+	@Before("MyAspect.myPointCut()")
 	public void before(JoinPoint joinPoint){
 		System.out.println("Before " + joinPoint);
 	}
@@ -43,5 +44,10 @@ public class MyAspect {
 	@After(value="execution(* ca.mcmaster.vo.UserDao.search(..))")
 	public void after(){
 		System.out.println("after");
+	}
+	
+	@Pointcut("execution(* ca.mcmaster.vo.UserDao.add(..))")
+	private void myPointCut(){
+		
 	}
 }

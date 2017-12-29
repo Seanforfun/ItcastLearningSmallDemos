@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!--  define a bean -->
+	<bean id="productDao" class="ca.mcmaster.vo.ProductDao"/>
+	<!-- define a advice -->
+	<bean id="myAspectXml" class="ca.mcmaster.aspect.MyAspectXml"/>
+	
+	<aop:config>
+		<!-- define the pointcut -->
+		<aop:pointcut expression="execution(* ca.mcmaster.vo.ProductDao.add(..))" id="myPointCut"/>
+		<aop:pointcut expression="execution(* ca.mcmaster.vo.ProductDao.delete(..))" id="myPointCutDelete"/>
+		<aop:pointcut expression="execution(* ca.mcmaster.vo.ProductDao.update(..))" id="myPointCutUpdate"/>
+		<aop:pointcut expression="execution(* ca.mcmaster.vo.ProductDao.search(..))" id="myPointCutSearch"/>
+		<!-- define the aspect -->
+		<aop:aspect ref="myAspectXml">
+			<aop:before method="before" pointcut-ref="myPointCut"/>
+			<aop:after method="after" pointcut-ref="myPointCutSearch" />
+			<aop:after-returning method="afterReturning" pointcut-ref="myPointCutDelete" returning="returnVal"/>
+			<aop:around method="round" pointcut-ref="myPointCutUpdate"/>
+			<aop:after-throwing method="afterThrowing" pointcut-ref="myPointCutSearch" throwing="throwVal"/>
+		</aop:aspect>
+	</aop:config>
+</beans>
