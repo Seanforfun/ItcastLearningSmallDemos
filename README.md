@@ -22,3 +22,5 @@ Watch vedios from itcast education. This repository is used to save all of the s
 #10 Test Different features of Spring(2017-12-21)
 
 #11 Test configure spring beans by annotation method. WARNING:Spring3.x annotaion method only supports jdk 7 or below! Otherwise there will be a java.lang.illegalargumentexception!(2017-12-22) 
+
+#12 Practice small demos of spring Aop(2017-12-28)
