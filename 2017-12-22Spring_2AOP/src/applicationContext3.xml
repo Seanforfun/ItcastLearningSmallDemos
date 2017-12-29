@@ -13,9 +13,12 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	<bean id="orderDao" class="ca.mcmaster.vo.OrderDao"/>
 	<bean id="MyArroundAdivce" class="ca.mcmaster.advice.MyArroundAdvice"/>
 	
-	<!-- automatic proxy : By name-->
-	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
-		<property name="beanNames" value="*Dao"/>
-		<property name="interceptorNames" value="MyBeforeAdvice"/>
+	<bean id="MyPointCut" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+		<property name="pattern" value=".*add.*"/>
+		<property name="advice" ref="MyArroundAdivce"/>
+	</bean>
+	
+	<!-- automatic proxy : By default-->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
 	</bean>
 </beans>

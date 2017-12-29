@@ -12,29 +12,19 @@ import ca.mcmaster.vo.OrderDao;
 
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
- * @version Dec 28, 2017 7:27:57 PM
+ * @version Dec 28, 2017 8:40:12 PM
  */
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:applicationContext3.xml")
-public class AOPDemo {
-	
+@ContextConfiguration("classpath:applicationContext.xml")
+public class AOPDemo1 {
 	@Resource(name="customerDao")
 	private CustomerDao customerDao;
-	
 	@Resource(name="orderDao")
 	private OrderDao orderDao;
+	
 	@Test
 	public void demo1(){
 		customerDao.add();
-		customerDao.delete();
 		orderDao.add();
-	}
-	
-	@Test
-	public void demo2(){
-		orderDao.add();
-		orderDao.delete();
-		orderDao.update();
 	}
 }
