@@ -34,6 +34,6 @@ public class SpringJDBCDemo {
 
 	@Test
 	public void demo2() {
-		JDBCtemplate.execute("insert into user values (null, 'Jenny')");
+		JDBCtemplate.execute("insert into user values (null, 'test')");
 	}
 }
