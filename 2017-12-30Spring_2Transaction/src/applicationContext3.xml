@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="
-http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
 	<context:property-placeholder location="classpath:jdbc.properties"/>
 	
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -21,22 +28,25 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
-	<!-- Transaction manager -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
-	<!-- Configure the proxy -->
-	<bean id="accountServiceProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="transactionManager" ref="transactionManager"/>
-		<property name="target" ref="accountService"/>
-		<property name="transactionAttributes">
-			<props>
-				<!-- PROPAGATION,ISOLATION,readOnly,-Exception,+Exception -->
-				<!-- -Exception: rollback -->
-				<!-- +Exception: not rollback -->
-				<prop key="transfer">PROPAGATION_REQUIRED, +java.lang.ArithmeticException</prop>
-			</props>
-		</property>
-	</bean>
+	<!-- Define a advice -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- Method to weave -->
+			<!-- 
+				isolation, propagation, read-only, no-rollback-for, timeout, rollback-for
+			 -->
+			<tx:method name="transfer" isolation="DEFAULT" propagation="REQUIRED" read-only="false" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<!-- Define pointcut -->
+		<aop:pointcut expression="execution(* ca.mcmaster.service.AccountServiceImpl1.transfer(..))" id="transferPointCut"/>
+		<!-- Define advice for pointcut -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="transferPointCut"/>
+	</aop:config>
 </beans>

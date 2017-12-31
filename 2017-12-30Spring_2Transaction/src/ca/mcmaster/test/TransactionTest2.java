@@ -16,7 +16,7 @@ import ca.mcmaster.service.AccountService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext3.xml")
 public class TransactionTest2 {
-	@Resource(name="accountServiceProxy")
+	@Resource(name="accountService")
 	private AccountService accountService;
 	
 	@Test
