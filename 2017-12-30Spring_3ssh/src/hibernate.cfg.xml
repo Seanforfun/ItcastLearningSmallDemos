@@ -13,7 +13,7 @@
 			<!-- JDBC driver class -->
 			<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 			<!-- url to database -->
-			<property name="hibernate.connection.url">jdbc:mysql:///shtest</property>
+			<property name="hibernate.connection.url">jdbc:mysql:///ssh1</property>
 			<!--  Username and password for database-->
 			<property name="hibernate.connection.username">root</property>
 			<property name="hibernate.connection.password">911023</property>
@@ -39,6 +39,7 @@
 			<property name="c3p0.idle_test_period">3000</property>
 			
 			<!--  Bean mapping-->
+			<mapping resource="ca/mcmaster/vo/Book.hbm.xml"/>
 		</session-factory>	
 	</hibernate-configuration>
 
