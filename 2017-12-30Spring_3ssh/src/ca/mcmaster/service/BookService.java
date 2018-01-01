@@ -1,7 +1,10 @@
 package ca.mcmaster.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,5 +22,25 @@ public class BookService {
 
 	public void addBook(Book book){
 		bookDao.addBook(book);
+	}
+	
+	public void updateBook(Book book){
+		bookDao.update(book);
+	}
+	
+	public void deleteBook(Book book){
+		bookDao.delete(book);
+	}
+	
+	public Book findBookById(Integer id) {
+		return bookDao.findById(id);
+	}
+	
+	public List<Book> findAll(){
+		return bookDao.findAll();
+	}
+	
+	public List<Book> findByCriteria(DetachedCriteria criteria){
+		return bookDao.findByCriteria(criteria);
 	}
 }
