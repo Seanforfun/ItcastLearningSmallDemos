@@ -30,4 +30,10 @@ public class BookAction extends ActionSupport implements ModelDriven<Book> {
 		bookService.addBook(book);
 		return null;
 	}
+	
+	public String find(){
+		Book book = bookService.findByIdLazy(1);
+		System.out.println(book);
+		return null;
+	}
 }

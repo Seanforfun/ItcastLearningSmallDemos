@@ -41,4 +41,8 @@ public class BookDao extends HibernateDaoSupport{
 	public List<Book> findByCriteria(DetachedCriteria criteria){
 		return this.getHibernateTemplate().findByCriteria(criteria);
 	}
+
+	public Book findByIdLazy(Integer id) {
+		return this.getHibernateTemplate().load(Book.class, id);
+	}
 }

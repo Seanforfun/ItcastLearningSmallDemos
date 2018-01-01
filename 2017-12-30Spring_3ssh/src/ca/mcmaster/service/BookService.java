@@ -43,4 +43,8 @@ public class BookService {
 	public List<Book> findByCriteria(DetachedCriteria criteria){
 		return bookDao.findByCriteria(criteria);
 	}
+	
+	public Book findByIdLazy(Integer id){
+		return bookDao.findByIdLazy(id);
+	}
 }
