@@ -9,4 +9,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>MyTestServlet</display-name>
+    <servlet-name>MyTestServlet</servlet-name>
+    <servlet-class>ca.mcmaster.servlet.MyTestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MyTestServlet</servlet-name>
+    <url-pattern>/MyTestServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

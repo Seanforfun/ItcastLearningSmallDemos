@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Panel</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/black/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("#test").draggable({
+				handle:"#title",
+				revert:"true",
+				cursor:"no-drop", 
+				disabled:"true"
+				});
+			
+			$('#tt').tabs({    
+			    border:false,    
+			    onSelect:function(title){    
+			        $.messager.alert("info", title+' is selected');    
+			    }    
+			}); 
+		});
+		
+		function showWindow(){
+				$("#win").window("center").window({
+					width:600,    
+				    height:400,    
+				    modal:false,
+				    iconCls:"icon-man",
+				    shadow:true,
+				    closed:false
+				});				
+			}
+		
+		function showMessager(){
+			$.messager.confirm('删除确认','您确认想要删除记录吗？',function(r){    
+			    if (r){
+			    	$.messager.alert('警告','确认删除');    
+			    }else{
+			    	$.messager.alert('警告','取消删除');   
+			    }
+			});  
+		}
+		
+		function mySub(){
+			$('#ff').form({    
+			    url:"../MyTestServlet",    
+			    onSubmit: function(){    
+			        // do some check    
+			        // return false to prevent submit;    
+			    },    
+			    success:function(data){    
+			        alert(data)    
+			    }    
+			});    
+			$('#ff').submit(); 
+		}
+	</script>
+</head>
+<body>
+	<!-- <div id="test" style="width:300px;height: 200px;background: pink" class="easyui-draggable">
+		<div id="title" style="padding:5px;background:#ccc;color:#fff">Title</div>
+	</div> -->
+	<!-- <div id="win" class="easyui-window" title="My Window" style="width:600px;height:400px"   
+        data-options="iconCls:'icon-man',modal:true">   
+  	  Window Content    
+	</div>  -->
+	<!-- <div id="win" class="easyui-window" data-options="closed:true">1111</div>
+	<input type="button" id="test" value="click on me!" onclick="showWindow()"> -->
+	
+	<!-- Dialog -->
+	<!-- <div id="dd" class="easyui-dialog" title="My Dialog" style="width:400px;height:200px;"   
+        data-options="iconCls:'icon-save',resizable:true,modal:true">   
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"></a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true"></a>
+		<a href="#" class="easyui-linkbutton">保存</a>
+		<a href="#" class="easyui-linkbutton">关闭</a>
+	</div>   -->
+	
+	<!-- Messager -->
+	<!-- <a id="btn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip'" onclick="showMessager()">click on me!</a> -->  
+	
+	<!-- Tab -->
+	<!-- <div id="tt" class="easyui-tabs" style="width:500px;height:250px;">   
+	    <div title="Tab1" style="padding:20px;display:true;">   
+	        tab1    
+	    </div>   
+	    <div title="Tab2" data-options="closable:true" style="overflow:auto;padding:20px;display:true;">   
+	        tab2    
+	    </div>   
+	    <div title="Tab3" data-options="iconCls:'icon-reload',closable:true" style="padding:20px;display:true;">   
+	        tab3    
+	    </div>
+	    <div title="Tab4" data-options="iconCls:'icon-reload',closable:true" style="padding:20px;display:true;">   
+	        tab4    
+	    </div>  
+	    <div title="Tab5" data-options="iconCls:'icon-reload',closable:true" style="padding:20px;display:true;">   
+	        tab5    
+	    </div>  
+	    <div title="Tab6" data-options="iconCls:'icon-reload',closable:true" style="padding:20px;display:true;">   
+	        tab6    
+	    </div>  
+	    <div title="Tab7" data-options="iconCls:'icon-reload',closable:true" style="padding:20px;display:true;">   
+	        tab7    
+	    </div>  
+	    <div title="Tab8" data-options="iconCls:'icon-reload',closable:true" style="padding:20px;display:true;">   
+	        tab8    
+	    </div>  
+	    <div title="Tab9" data-options="iconCls:'icon-reload',closable:true" style="padding:20px;display:true;">   
+	        tab9    
+	    </div>  
+	</div>   -->
+	
+	<!-- Layout -->
+	<!-- <body class="easyui-layout">   
+	    <div data-options="region:'north',title:'North Title',split:true,collapsible:true" style="height:100px;"></div>   
+	    <div data-options="region:'south',title:'South Title',split:true" style="height:60px;">
+	    	<div style="height:60px; line-height:60px; text-align:center;">@SeanForFun</div>
+	    </div>   
+	    <div data-options="region:'east',iconCls:'icon-reload',title:'East',split:true" style="width:100px;"></div>   
+	    <div data-options="region:'west',title:'West',split:true" style="width:100px;"></div>   
+	    <div data-options="region:'center',title:'center title',collapsible:true" style="padding:5px;background:#eee;"></div>   
+	</body>  -->
+	
+	<!-- Form -->
+	<form id="ff" method="post" action="myTest">   
+	    <div>   
+	        <label for="name">Name:</label>   
+	        <input class="easyui-validatebox" type="text" name="name" data-options="required:true" />   
+	    </div>   
+	    <div>   
+	        <label for="email">Email:</label>   
+	        <input class="easyui-validatebox" type="text" name="email" data-options="validType:'email'" />   
+	    </div>
+	    <a id="btn" onclick="mySub()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">submit</a> 
+	</form> 
+
+</body>
+</html>
