@@ -2,6 +2,7 @@ package ca.mcmaster.mybatis;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -51,5 +52,24 @@ public class MyBatisFirst {
 			sqlSession.close();
 		}
 		System.out.println(user);
+	}
+	
+	@Test
+	public void testAddUser(){
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		User temp = new User();
+		temp.setUsername("Sean");
+		temp.setAddress("Hamilton");
+		temp.setBirthday(new Date(24,3,13));
+		temp.setSex("m");
+		try {
+			sqlSession.insert("test.insertUser", temp);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			sqlSession.close();
+		}
+		System.out.println("User id: " + temp.getId());
 	}
 }

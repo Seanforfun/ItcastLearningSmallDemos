@@ -20,4 +20,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where
 			username like '%${value}%' 
 	</select>
+	<insert id="insertUser" parameterType="ca.mcmaster.vo.User">
+		<selectKey keyProperty="id" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO
+			USER
+			(username, birthday, sex, address)
+		VALUES
+			(#{username},#{birthday},#{sex},#{address})
+	</insert>
 </mapper>

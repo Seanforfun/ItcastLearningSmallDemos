@@ -10,7 +10,7 @@ public class User {
 	private int id;
 	private String username;
 	private String sex;
-	private Date birhday;
+	private Date birthday;
 	private String address;
 	public int getId() {
 		return id;
@@ -30,11 +30,11 @@ public class User {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	public Date getBirhday() {
-		return birhday;
+	public Date getBirthday() {
+		return birthday;
 	}
-	public void setBirhday(Date birhday) {
-		this.birhday = birhday;
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
 	}
 	public String getAddress() {
 		return address;
@@ -45,6 +45,6 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", sex=" + sex
-				+ ", birhday=" + birhday + ", address=" + address + "]";
+				+ ", birthday=" + birthday + ", address=" + address + "]";
 	}
 }
