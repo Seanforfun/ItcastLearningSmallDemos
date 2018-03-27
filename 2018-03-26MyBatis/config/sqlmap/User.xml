@@ -30,4 +30,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES
 			(#{username},#{birthday},#{sex},#{address})
 	</insert>
+	
+	<update id="updateUser" parameterType="ca.mcmaster.vo.User">
+		UPDATE
+			USER
+		SET 
+			username = #{username},
+			birthday = #{birthday},
+			sex = #{sex},
+			address = #{address}
+		WHERE
+			id = #{id}
+	</update>
+	
+	<delete id="deleteUser" parameterType="int">
+		DELETE FROM
+			USER
+		WHERE
+			id = #{id}
+	</delete>
 </mapper>

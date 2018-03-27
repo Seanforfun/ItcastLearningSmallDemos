@@ -72,4 +72,15 @@ public class MyBatisFirst {
 		}
 		System.out.println("User id: " + temp.getId());
 	}
+	
+	@Test
+	public void testUpdateUser(){
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		User temp = sqlSession.selectOne("test.findUserById", 29);
+		temp.setUsername("BigSean");
+		sqlSession.update("test.updateUser", temp);
+		sqlSession.delete("test.deleteUser", 30);
+		sqlSession.commit();
+		sqlSession.close();
+	}
 }
