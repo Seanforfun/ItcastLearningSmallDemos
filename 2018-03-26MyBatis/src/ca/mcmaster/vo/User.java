@@ -1,5 +1,6 @@
 package ca.mcmaster.vo;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +8,8 @@ import java.util.List;
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
  * @version Mar 26, 2018 1:46:45 PM
  */
-public class User {
+@SuppressWarnings("serial")
+public class User implements Serializable{
 	private int id;
 	private String username;
 	private String sex;

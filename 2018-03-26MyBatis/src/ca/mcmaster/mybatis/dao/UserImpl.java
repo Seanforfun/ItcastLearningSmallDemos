@@ -37,4 +37,9 @@ public class UserImpl implements UserMapper {
 		sqlSession.close();
 		return userList;
 	}
+	@Override
+	public void updateUser(User user) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
 }
