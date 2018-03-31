@@ -4,7 +4,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ca.mcmaster.mybatis.mapper.OrdersMapperCustom">
-	<select id="findOrderUserList" resultType="OrdersCustom">
+	<resultMap type="orders" id="ordersUsersResultMap">
+		<id column="id" property="id"/>
+		<result column="user_id" property="userId"/>
+		<result column="number" property="number"/>
+		<result column="createtime" property="createtime"/>
+		<result column="note" property="note"/>
+		<!-- 一对一查询，将数据库中的column映射到orders的user属性中 -->
+		<association property="user" javaType="user" >
+			<id column="user_id" property="id"/>
+			<result column="username" property="username"/>
+		</association>
+	</resultMap>
+	
+	<resultMap type="orders" id="orderAndOrderdetails" extends="ordersUsersResultMap">
+		<!-- 一对多查询，将数据库映射到orderdetails链表中 -->
+		<collection property="orderdetails" ofType="orderdetail">
+				<id column="orderdetail_id" property="id"/>
+				<result column="orderdetail_item_num" property="itemsNum"/>
+				<result column="orderdetail_item_id" property="itemsId"/>
+		</collection>
+	</resultMap>
+	<select id="findOrderUserList" resultType="ordersCustom">
 		SELECT
   			orders.*,
   			user.username
@@ -12,5 +33,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			USER
 		WHERE
 			orders.user_id = user.id
+	</select>
+	
+	<select id="findOrderUserListByMap" resultMap="ordersUsersResultMap">
+		SELECT
+  			orders.*,
+  			user.username
+		FROM orders,
+ 			USER
+		WHERE
+			orders.user_id = user.id
+	</select>
+	
+	<select id="findOrderAndOrderdetail" resultMap="orderAndOrderdetails">
+		SELECT
+  			orders.*,
+  			user.username,
+  			orderdetail.id    orderdetail_id,
+  			orderdetail.items_num orderdetail_item_num,
+ 			orderdetail.items_id orderdetail_item_id
+		FROM orders,
+  			USER,
+  			orderdetail
+		WHERE orders.id = orderdetail.orders_id
+    		AND orders.user_id = user.id;
 	</select>
 </mapper>

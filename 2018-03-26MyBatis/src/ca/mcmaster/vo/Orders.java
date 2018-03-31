@@ -5,19 +5,12 @@ import java.util.List;
 
 public class Orders {
     private Integer id;
-
     private Integer userId;
-
     private String number;
-
     private Date createtime;
-
     private String note;
-    
-    //用户信息
     private User user;
     
-    //订单明细
     private List<Orderdetail> orderdetails;
 
     public Integer getId() {

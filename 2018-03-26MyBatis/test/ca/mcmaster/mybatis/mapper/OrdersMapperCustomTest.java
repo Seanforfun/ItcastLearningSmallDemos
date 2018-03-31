@@ -1,7 +1,5 @@
 package ca.mcmaster.mybatis.mapper;
 
-import static org.junit.Assert.*;
-
 import java.io.InputStream;
 import java.util.List;
 
@@ -12,6 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.mcmaster.vo.Orders;
 import ca.mcmaster.vo.OrdersCustom;
 
 /**
@@ -37,4 +36,21 @@ public class OrdersMapperCustomTest {
 		sqlSession.close();
 	}
 
+	@Test
+	public void testFindOrderUserListByMap() throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		OrdersMapperCustom mapper = sqlSession.getMapper(OrdersMapperCustom.class);
+		List<Orders> ordersList = mapper.findOrderUserListByMap();
+		System.out.println(ordersList);
+		sqlSession.close();
+	}
+	
+	@Test
+	public void findOrderAndOrderdetail() throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		OrdersMapperCustom mapper = sqlSession.getMapper(OrdersMapperCustom.class);
+		List<Orders> ordersList = mapper.findOrderAndOrderdetail();
+		System.out.println(ordersList);
+		sqlSession.close();
+	}
 }
