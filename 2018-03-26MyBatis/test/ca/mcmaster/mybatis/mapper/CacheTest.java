@@ -42,13 +42,16 @@ public class CacheTest {
 	public void testCache2() throws Exception{
 		SqlSession sqlSession1 = sqlSessionFactory.openSession();
 		SqlSession sqlSession2 = sqlSessionFactory.openSession();
+		SqlSession sqlSession3 = sqlSessionFactory.openSession();
 		UserMapper mapper1 = sqlSession1.getMapper(UserMapper.class);
 		User user1 = mapper1.findUserById(1);
-		user1.setUsername("1212");
-		mapper1.updateUser(user1);
-		sqlSession1.commit();
 		System.out.println(user1);
 		sqlSession1.close();
+		user1.setUsername("1111");
+		UserMapper mapper3 = sqlSession3.getMapper(UserMapper.class);
+		mapper3.updateUser(user1);
+		sqlSession3.commit();
+		sqlSession3.close();
 		UserMapper mapper2 = sqlSession2.getMapper(UserMapper.class);
 		User user2 = mapper2.findUserById(1);
 		sqlSession2.close();

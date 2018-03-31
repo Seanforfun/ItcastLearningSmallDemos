@@ -5,6 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="ca.mcmaster.mybatis.mapper.UserMapper">
 	<cache />
+	<!-- useCache="false" set up the level2 cache for differenet sql-->
 	<select id="findUserById" parameterType="int" resultType="user">
 		select
 			*
@@ -32,7 +33,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			(#{username},#{birthday},#{sex},#{address})
 	</insert>
 	
-	<update id="updateUser" parameterType="user">
+	<!-- flushCache = false will lead to dirty read -->
+	<update id="updateUser" parameterType="user" flushCache="true">
 		UPDATE
 			USER
 		SET 
