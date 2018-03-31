@@ -5,6 +5,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<properties resource="db.properties">
 		<property name="" value=""/>
 	</properties>
+	<settings>
+		<setting name="lazyLoadingEnabled" value="true"/>
+		<setting name="aggressiveLazyLoading" value="false"/>
+	</settings>
 	<typeAliases>
 		<!-- <typeAlias type="ca.mcmaster.vo.User" alias="user"/> -->	
 		<package name="ca.mcmaster.vo"/>

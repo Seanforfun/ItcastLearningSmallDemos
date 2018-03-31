@@ -25,6 +25,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				<result column="orderdetail_item_id" property="itemsId"/>
 		</collection>
 	</resultMap>
+	
+	<resultMap type="user" id="userOrderdetailResultMap">
+		<id column="user_id" property="id"/>
+		<result column="username" property="username"/>
+		<collection property="orderList" ofType="ca.mcmaster.vo.Orders">
+			<id column="id" property="id"/>
+			<result column="user_id" property="userId"/>
+			<result column="number" property="number"/>
+			<result column="createtime" property="createtime"/>
+			<result column="note" property="note"/>
+			<collection property="orderdetails" ofType="ca.mcmaster.vo.Orderdetail">
+				<id column="orderdetail_id" property="id"/>
+				<result column="orderdetail_item_num" property="itemsNum"/>
+				<result column="orderdetail_item_id" property="itemsId"/>
+				<association property="items" javaType="ca.mcmaster.vo.Items">
+					<id column="orderdetail_item_id" property="id"/>
+					<result column="item_name" property="name"/>
+					<result column="item_detail" property="detail"/>
+				</association>
+			</collection>
+		</collection>
+	</resultMap>
+	
+	<!-- one to one search, lazy loading -->
+	<resultMap type="orders" id="orderCustomLazyLoading">
+		<id column="id" property="id"/>
+		<result column="user_id" property="userId"/>
+		<result column="number" property="number"/>
+		<result column="createtime" property="createtime"/>
+		<result column="note" property="note"/>
+		<!-- 用户信息延迟加载, select就是延时加载statement所在的id 
+		column:关联查询的列-->
+		<association property="user" select="ca.mcmaster.mybatis.mapper.UserMapper.findUserById" column="user_id">
+			<id column="user_id" property="id"/>
+			<result column="username" property="username"/>
+			<result column="sex" property="sex"/>
+		</association>
+	</resultMap>
+	
 	<select id="findOrderUserList" resultType="ordersCustom">
 		SELECT
   			orders.*,
@@ -57,5 +96,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   			orderdetail
 		WHERE orders.id = orderdetail.orders_id
     		AND orders.user_id = user.id;
+	</select>
+	
+	<select id="findUserOrderdetail" resultMap="userOrderdetailResultMap">
+		SELECT
+		  orders.*,
+		  user.username,
+		  orderdetail.id    orderdetail_id,
+		  orderdetail.items_num orderdetail_item_num,
+		  orderdetail.items_id orderdetail_item_id,
+		  items.name item_name,
+		  items.detail item_detail
+		FROM USER,
+		  orders,
+		  orderdetail,
+		  items
+		WHERE orders.user_id = user.id
+		    AND orders.id = orderdetail.orders_id
+		    AND orderdetail.items_id = items.id
+	</select>
+	
+	<!-- one to one lazy loading， lazy load user information -->
+	<select id="findOrderUserListLazyLoading" resultMap="orderCustomLazyLoading">
+		SELECT
+  			orders.*
+		FROM orders
 	</select>
 </mapper>

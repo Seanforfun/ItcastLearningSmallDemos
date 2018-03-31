@@ -4,6 +4,7 @@ import java.util.List;
 
 import ca.mcmaster.vo.Orders;
 import ca.mcmaster.vo.OrdersCustom;
+import ca.mcmaster.vo.User;
 
 /**
  * @author SeanForFun
@@ -14,4 +15,6 @@ public interface OrdersMapperCustom {
 	public List<OrdersCustom> findOrderUserList() throws Exception;
 	public List<Orders> findOrderUserListByMap() throws Exception;
 	public List<Orders> findOrderAndOrderdetail() throws Exception;
+	public List<User> findUserOrderdetail() throws Exception;
+	public List<Orders> findOrderUserListLazyLoading() throws Exception;
 }

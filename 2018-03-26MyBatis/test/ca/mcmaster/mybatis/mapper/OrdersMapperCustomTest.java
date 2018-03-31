@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import ca.mcmaster.vo.Orders;
 import ca.mcmaster.vo.OrdersCustom;
+import ca.mcmaster.vo.User;
 
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
@@ -46,11 +47,30 @@ public class OrdersMapperCustomTest {
 	}
 	
 	@Test
-	public void findOrderAndOrderdetail() throws Exception {
+	public void testFindOrderAndOrderdetail() throws Exception {
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		OrdersMapperCustom mapper = sqlSession.getMapper(OrdersMapperCustom.class);
 		List<Orders> ordersList = mapper.findOrderAndOrderdetail();
 		System.out.println(ordersList);
+		sqlSession.close();
+	}
+	
+	@Test
+	public void testFindUserOrderdetail() throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		OrdersMapperCustom mapper = sqlSession.getMapper(OrdersMapperCustom.class);
+		List<User> userList = mapper.findUserOrderdetail();
+		System.out.println(userList);
+		sqlSession.close();
+	}
+	
+	@Test
+	public void testFindOrderUserListLazyLoading() throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		OrdersMapperCustom mapper = sqlSession.getMapper(OrdersMapperCustom.class);
+		List<Orders> orderList = mapper.findOrderUserListLazyLoading();
+		User user = orderList.get(0).getUser();
+		System.out.println(user);
 		sqlSession.close();
 	}
 }

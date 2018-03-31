@@ -1,6 +1,7 @@
 package ca.mcmaster.vo;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
@@ -12,6 +13,14 @@ public class User {
 	private String sex;
 	private Date birthday;
 	private String address;
+	
+	private List<Orders> orderList;
+	public List<Orders> getOrderList() {
+		return orderList;
+	}
+	public void setOrderList(List<Orders> orderList) {
+		this.orderList = orderList;
+	}
 	public int getId() {
 		return id;
 	}
@@ -45,6 +54,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", sex=" + sex
-				+ ", birthday=" + birthday + ", address=" + address + "]";
+				+ ", birthday=" + birthday + ", address=" + address
+				+ ", orderList=" + orderList + "]";
 	}
 }
