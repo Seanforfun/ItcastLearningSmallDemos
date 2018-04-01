@@ -33,4 +33,15 @@
 			<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
 		</bean>
 		
+		<!-- <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+			<property name="mapperInterface" value="ca.mcmaster.mybatis.mapper.UserMapper"/>
+			<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+		</bean> -->
+		
+		<!-- 扫描器不需要配置id, 在获取bean的时候默认类名首字母小写 -->
+		<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+			<property name="basePackage" value="ca.mcmaster.mybatis.mapper"/>
+			<!-- sqlSessionFactory will cause conflict with .properties -->
+			<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+		</bean>
 </beans>
