@@ -1,0 +1,14 @@
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<!-- <typeAlias type="ca.mcmaster.vo.User" alias="user"/> -->	
+		<package name="ca.mcmaster.mybatis.po"/>
+	</typeAliases>
+	<!-- 加载mapper.xml -->
+	<mappers>
+		<!-- <mapper resource="mapper/UserMapper.xml" /> -->
+		<package name="ca.mcmaster.mybatis.mapper"/>
+	</mappers>
+</configuration>

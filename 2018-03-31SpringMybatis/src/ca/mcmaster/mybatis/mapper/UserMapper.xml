@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ca.mcmaster.mybatis.mapper.UserMapper">
+	<cache />
+	<!-- useCache="false" set up the level2 cache for differenet sql-->
+	<select id="findUserById" parameterType="int" resultType="user">
+		select
+			*
+		from
+			user
+		where
+			id = #{id}
+	</select>
+	<select id="findUserByName" parameterType="String" resultType="user">
+		select
+			*
+		from
+			user
+		where
+			username like '%${value}%' 
+	</select>
+	<insert id="insertUser" parameterType="user">
+		<selectKey keyProperty="id" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO
+			USER
+			(username, birthday, sex, address)
+		VALUES
+			(#{username},#{birthday},#{sex},#{address})
+	</insert>
+	
+	<!-- flushCache = false will lead to dirty read -->
+	<update id="updateUser" parameterType="user" flushCache="true">
+		UPDATE
+			USER
+		SET 
+			username = #{username},
+			birthday = #{birthday},
+			sex = #{sex},
+			address = #{address}
+		WHERE
+			id = #{id}
+	</update>
+	
+	<delete id="deleteUser" parameterType="int">
+		DELETE FROM
+			USER
+		WHERE
+			id = #{id}
+	</delete>
+</mapper>
