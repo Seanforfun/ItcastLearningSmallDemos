@@ -17,19 +17,52 @@
 		
 	<!-- 配置Handler -->
 	<!-- 需要实现controller接口 -->
-	<bean name="/itemList.action" class="ca.mcmaster.springmvc.controller.ItemController"></bean>
+	<bean name="/itemList.action" id="ItemController" class="ca.mcmaster.springmvc.controller.ItemController"></bean>
+	<bean name="/itemList1.action" id="ItemController1" class="ca.mcmaster.springmvc.controller.ItemController1"></bean>
+	<!-- <bean class="ca.mcmaster.springmvc.controller.ItemController2"/> -->
+	<context:component-scan base-package="ca.mcmaster.springmvc.controller"/>
 	
+	<!-- ****************************HandlerMapping************************************************* -->
+	<!-- 多个处理器映射器可以共存 -->
 	<!-- 配置处理器映射器 -->	
 	<!-- 核心是实现了HandlerMapping接口 -->
 	<!-- 根据请求的url将请求映射到对应的handler上， 根据bean的那么进行匹配，不常用，被注解替代 -->
 	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
 	
+	<!-- 通过SimpleUrlHandlerMapping实现 -->
+	<!-- 通过handler的id进行映射 -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/itemList.action">ItemController1</prop>
+				<prop key="/itemList1.action">ItemController1</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 注解处理映射器 -->
+	<!-- 通过@controller来标识一个控制器 -->
+	<!-- 通过@requestMapping来指定Handler方法对应的url -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+	
+	<!-- ****************************HandlerAdapter*************************************************-->
 	<!-- 配置处理器适配器 -->	
 	<!-- handler的编写要根据处理器适配器的要求来编写 -->
-	<!-- 核心是实现了HandlerAdapter接口 -->
-	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+	<!-- 核心是实现了HandlerAdapter接口, 要求我们编写的Handler实现了Controller接口 -->
+	<!-- <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/> -->
+	
+	<!-- 核心是实现了HandlerAdapter接口, 要求我们编写的Handler实现了HttpRequestHandler接口 -->
+	<!-- <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"/> -->
+	
+	<!-- 注解处理器映射器 -->
+	<!-- 和RequestMappingHandlerMapping配合使用 -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
+	
 		
+	<!-- *****************************************************************************-->
 	<!-- 配置视图解析器器 -->	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="WEB-INF/jsp/"/>
+		<property name="suffix" value=".jsp"></property>
 	</bean>
 </beans>
