@@ -8,7 +8,7 @@
   	<init-param>
   		<param-name>contextConfigLocation</param-name>
   		<!-- 默认地址:classpath:"servlet名称" + "-servlet.xml" -> springmvc-servlet.xml-->
-  		<param-value>classpath:springmvx.xml</param-value>
+  		<param-value>classpath:springmvc.xml</param-value>
   	</init-param>
   </servlet>
   <servlet-mapping>

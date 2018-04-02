@@ -15,12 +15,21 @@
 		http://www.springframework.org/schema/tx 
 		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
 		
-	<!-- 配置Handler -->		
-
-	<!-- 配置处理器映射器 -->	
+	<!-- 配置Handler -->
+	<!-- 需要实现controller接口 -->
+	<bean name="/itemList.action" class="ca.mcmaster.springmvc.controller.ItemController"></bean>
 	
-	<!-- 配置处理器适配器 -->		
+	<!-- 配置处理器映射器 -->	
+	<!-- 核心是实现了HandlerMapping接口 -->
+	<!-- 根据请求的url将请求映射到对应的handler上， 根据bean的那么进行匹配，不常用，被注解替代 -->
+	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+	
+	<!-- 配置处理器适配器 -->	
+	<!-- handler的编写要根据处理器适配器的要求来编写 -->
+	<!-- 核心是实现了HandlerAdapter接口 -->
+	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
 		
 	<!-- 配置视图解析器器 -->	
-	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	</bean>
 </beans>
