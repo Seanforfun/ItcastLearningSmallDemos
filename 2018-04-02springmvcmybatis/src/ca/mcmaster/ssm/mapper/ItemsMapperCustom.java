@@ -12,7 +12,7 @@ import ca.mcmaster.ssm.po.ItemsQueryVo;
  */
 public interface ItemsMapperCustom {
 	/**
-	 * @Description: Find items information with query conditions.
+	 * @Description Find items information with query conditions.
 	 * @param itemsQueryVo
 	 * @return
 	 * @throws Exception

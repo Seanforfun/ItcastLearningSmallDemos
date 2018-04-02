@@ -2,6 +2,8 @@ package ca.mcmaster.ssm.service.ebi;
 
 import java.util.List;
 
+import org.springframework.beans.factory.BeanCreationException;
+
 import ca.mcmaster.ssm.po.ItemsCustom;
 import ca.mcmaster.ssm.po.ItemsQueryVo;
 
@@ -19,4 +21,19 @@ public interface ItemsService {
 	 */
 	public List<ItemsCustom> findItemsList(ItemsQueryVo itemsQueryVo)
 			throws Exception;
+
+	/**
+	 * @Description Get an item by its id.
+	 * @return
+	 * @throws Exception
+	 */
+	public ItemsCustom getItemsById(int id) throws Exception;
+
+	/**
+	 * @Description Update a item information.
+	 * @param id	Id of item to be updated.
+	 * @param itemsCustom
+	 * @throws Exception
+	 */
+	public void updateItem(Integer id, ItemsCustom itemsCustom) throws Exception;
 }
