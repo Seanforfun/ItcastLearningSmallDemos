@@ -30,6 +30,7 @@
 			<property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml"/>
 		</bean>
 		
+		<!-- 配合注解使用 -->
 		<!-- mapper扫描器，用于扫描mapper所在的包 -->
 		<!-- 扫描器不需要配置id, 在获取bean的时候默认类名首字母小写 -->
 		<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

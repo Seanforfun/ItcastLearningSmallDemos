@@ -19,6 +19,9 @@
 	<!-- 需要实现controller接口 -->
 	<context:component-scan base-package="ca.mcmaster.ssm.controller"/>
 	
+	<!-- 通过annotation-driven替代处理器映射器和适配器的peizhi -->
+	<!-- <mvc:annotation-driven></mvc:annotation-driven> -->
+	
 	<!-- ****************************HandlerMapping************************************************* -->
 	<!-- 注解处理映射器 -->
 	<!-- 通过@controller来标识一个控制器 -->

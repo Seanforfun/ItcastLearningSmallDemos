@@ -1,0 +1,27 @@
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ca.mcmaster.ssm.mapper.ItemsMapperCustom">
+	<!-- 商品查询sql片段 -->
+	<!-- 建议以单表为单位 -->
+	<sql id="query_items_where">
+		<if test="itemsCustom != null">
+			<if test="itemsCustom.name != null and itemsCustom.name != ''">
+				and name like '%${itemsCustom.name}%'
+			</if>
+			<if test="itemsCustom.id != null">
+				and id = #{itemsCustom.id}
+			</if>
+		</if>		
+	</sql>
+
+	<!-- 商品查询 -->
+	<select id="findItemsList" parameterType="ca.mcmaster.ssm.po.ItemsQueryVo"
+		resultType="ca.mcmaster.ssm.po.ItemsCustom">
+		SELECT * FROM items
+		<where>
+			<include refid="query_items_where"/>
+		</where>
+	</select>
+</mapper>
