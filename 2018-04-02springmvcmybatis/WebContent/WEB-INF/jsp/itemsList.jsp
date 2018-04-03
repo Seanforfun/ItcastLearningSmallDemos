@@ -15,6 +15,16 @@
 <tr>
 <td><input type="submit" value="查询"/></td>
 </tr>
+<tr>
+	<td>商品类别</td>
+	<td>
+		<select>
+			<c:forEach items="${itemsType}" var="item">
+				<option value="${item.key }">${item.value }</option>
+			</c:forEach>
+		</select>
+	</td>
+</tr>
 </table>
 商品列表：
 <table width="100%" border=1>

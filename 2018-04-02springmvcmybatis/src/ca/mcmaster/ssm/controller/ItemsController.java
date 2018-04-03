@@ -2,7 +2,9 @@ package ca.mcmaster.ssm.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,7 +59,8 @@ public class ItemsController {
 
 	// 返回一个字符串，字符串为逻辑视图名
 	@RequestMapping(value = "/editItems", method = RequestMethod.GET)
-	public String editItems(Model model, Integer id) throws Exception {
+	public String editItems(Model model,
+			@ModelAttribute(value = "id") Integer id) throws Exception {
 		ItemsCustom itemsCustom = itemsService.getItemsById(id);
 		model.addAttribute("item", itemsCustom);
 		return "editItem";
@@ -79,16 +83,32 @@ public class ItemsController {
 
 	// 重定向无法共享request域的数据，并且url会发生变化
 	@RequestMapping(value = "/updateItems", method = RequestMethod.GET)
-	public String updateItems(Integer id, ItemsCustom itemsCustom,
+	public String updateItems(Model model,
+			@ModelAttribute(value = "id") Integer id,
+			@ModelAttribute(value = "item") ItemsCustom itemsCustom,
 			ItemsQueryVo itemsQueryVo) throws Exception {
+		// 通过传入model将数据回显
+		// model.addAttribute("id", id);
+		// model.addAttribute("item", item);
 		itemsService.updateItem(id, itemsCustom);
-		return "redirect:queryItems.action";
+		// return "redirect:queryItems.action";
 		// return "forward:queryItems.action";
+		return "editItem";
 	}
+
+	// 自定义属性编辑器,无法在多个类中公用
+	// @InitBinder
+	// public void initBind(WebDataBinder binder) throws Exception{
+	// binder.registerCustomEditor(Date.class, new CustomDateEditor(new
+	// SimpleDateFormat("yyyy-MM-dd HH-mm-ss"), true));
+	// }
 	
-	//自定义属性编辑器,无法在多个类中公用
-//	@InitBinder
-//	public void initBind(WebDataBinder binder) throws Exception{
-//		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH-mm-ss"), true));
-//	}
+	//将公用的取数据的方法传递到页面，但是每次调用当前controller都会使用，会增加服务期负担。
+	@ModelAttribute(value="itemsType")
+	public Map<String, String> getItemsMap(){
+		Map<String, String> itemsType = new HashMap<>();
+		itemsType.put("001", "数码类");
+		itemsType.put("002", "服装");
+		return itemsType;
+	}
 }

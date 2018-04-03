@@ -15,6 +15,10 @@
 修改商品信息：
 <table width="100%" border=1>
 <tr>
+	<td>商品编号</td>
+	<td><input type="text" name="id" value="${id }"/></td>
+</tr>
+<tr>
 	<td>商品名称</td>
 	<td><input type="text" name="name" value="${item.name }"/></td>
 </tr>
@@ -35,6 +39,16 @@
 <tr>
 <td colspan="2" align="center"><input type="submit" value="提交"/>
 </td>
+</tr>
+<tr>
+	<td>商品类别</td>
+	<td>
+		<select>
+			<c:forEach items="${itemsType}" var="item">
+				<option value="${item.key }">${item.value }</option>
+			</c:forEach>
+		</select>
+	</td>
 </tr>
 </table>
 
