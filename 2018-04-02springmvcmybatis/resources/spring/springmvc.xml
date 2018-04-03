@@ -19,19 +19,29 @@
 	<!-- 需要实现controller接口 -->
 	<context:component-scan base-package="ca.mcmaster.ssm.controller"/>
 	
-	<!-- 通过annotation-driven替代处理器映射器和适配器的peizhi -->
-	<!-- <mvc:annotation-driven></mvc:annotation-driven> -->
+	<!-- 通过annotation-driven替代处理器映射器和适配器的配置 -->
+	<mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="ca.mcmaster.ssm.controller.converter.CustomConverter"/>
+				<bean class="ca.mcmaster.ssm.controller.converter.StringTrimConverter"/>
+			</list>
+		</property>
+	</bean>
 	
 	<!-- ****************************HandlerMapping************************************************* -->
 	<!-- 注解处理映射器 -->
 	<!-- 通过@controller来标识一个控制器 -->
 	<!-- 通过@requestMapping来指定Handler方法对应的url -->
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+	<!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/> -->
 	
 	<!-- ****************************HandlerAdapter*************************************************-->
 	<!-- 注解处理器映射器 -->
 	<!-- 和RequestMappingHandlerMapping配合使用 -->
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
+	<!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="webBindingInitializer" ref="customBinder"/>
+	</bean> -->
 	
 		
 	<!-- *****************************************************************************-->
@@ -39,5 +49,14 @@
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/"/>
 		<property name="suffix" value=".jsp"></property>
+	</bean>
+	
+	<bean id="customPropertyEditor" class="ca.mcmaster.ssm.propertyeditor.CustomPropertyEditor"/>
+	<bean id="customBinder" class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+		<property name="propertyEditorRegistrars">
+			<list>
+				<ref bean="customPropertyEditor"/>
+			</list>
+		</property>
 	</bean>
 </beans>
