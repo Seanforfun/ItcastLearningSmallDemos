@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import ca.mcmaster.ssm.controller.validate.ValidateGroup;
+import ca.mcmaster.ssm.exception.CustomException;
 import ca.mcmaster.ssm.po.ItemsCustom;
 import ca.mcmaster.ssm.po.ItemsQueryVo;
 import ca.mcmaster.ssm.service.ebi.ItemsService;
@@ -82,7 +84,7 @@ public class ItemsController {
 	public String updateItems(Model model,
 			MultipartFile pictureFile,
 			@ModelAttribute(value = "id") Integer id,
-			@Validated @ModelAttribute(value = "item") ItemsCustom itemsCustom,
+			@Validated(value=ValidateGroup.class) @ModelAttribute(value = "item") ItemsCustom itemsCustom,
 			BindingResult bindingResult,
 			ItemsQueryVo itemsQueryVo) throws Exception {
 		if(bindingResult.hasErrors()){

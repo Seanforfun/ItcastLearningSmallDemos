@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import ca.mcmaster.ssm.controller.validate.ValidateGroup;
+
 public class Items {
     private Integer id;
 
@@ -15,7 +17,7 @@ public class Items {
 
     private String pic;
 
-    @NotNull(message="{items.createtime.null.error}")
+    @NotNull(message="{items.createtime.null.error}",groups={ValidateGroup.class})
     private Date createtime;
 
     private String detail;

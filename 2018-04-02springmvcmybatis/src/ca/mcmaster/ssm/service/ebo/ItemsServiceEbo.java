@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ca.mcmaster.ssm.exception.CustomException;
 import ca.mcmaster.ssm.mapper.ItemsMapper;
 import ca.mcmaster.ssm.mapper.ItemsMapperCustom;
 import ca.mcmaster.ssm.po.Items;
@@ -33,6 +34,9 @@ public class ItemsServiceEbo implements ItemsService {
 	@Override
 	public ItemsCustom getItemsById(int id) throws Exception {
 		Items items = itemsMapper.selectByPrimaryKey(id);
+		if(items == null){
+			throw new CustomException("商品信息不存在！");
+		}
 		ItemsCustom itemsCustom = new ItemsCustom();
 		BeanUtils.copyProperties(items, itemsCustom);
 		return itemsCustom;
