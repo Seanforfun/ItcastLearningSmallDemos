@@ -81,7 +81,7 @@ public class ItemsController {
 			@ModelAttribute(value = "id") Integer id,
 			@ModelAttribute(value = "item") ItemsCustom itemsCustom,
 			ItemsQueryVo itemsQueryVo) throws Exception {
-		if(null != pictureFile){
+		if(null != pictureFile && !pictureFile.getOriginalFilename().trim().equals("")){
 			String originName = pictureFile.getOriginalFilename();
 			String path = "F:\\ImageSave\\";
 			String newFilename = UUID.randomUUID() + originName.substring(originName.lastIndexOf("."));

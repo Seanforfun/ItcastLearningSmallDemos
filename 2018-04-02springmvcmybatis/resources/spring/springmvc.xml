@@ -41,6 +41,13 @@
 	<!-- 和RequestMappingHandlerMapping配合使用 -->
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="webBindingInitializer" ref="customBinder"/>
+		<property name="messageConverters">
+			<list>
+				<!-- 加入http转json转换器 -->
+				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
+			</list>
+		</property>
+		
 	</bean>
 	
 		
