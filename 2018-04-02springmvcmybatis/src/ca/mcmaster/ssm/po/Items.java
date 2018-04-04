@@ -2,15 +2,20 @@ package ca.mcmaster.ssm.po;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Items {
     private Integer id;
 
+    @Size(min=5,max=10,message="{items.name.length.error}")
     private String name;
 
     private Float price;
 
     private String pic;
 
+    @NotNull(message="{items.createtime.null.error}")
     private Date createtime;
 
     private String detail;

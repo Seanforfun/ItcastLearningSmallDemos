@@ -61,12 +61,32 @@
 	<!-- <bean id="customPropertyEditor" class="ca.mcmaster.ssm.propertyeditor.CustomPropertyEditor"/> -->
 	<bean id="customBinder" class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
 		<property name="conversionService" ref="conversionService"/>
+		<!-- 绑定校验器 -->
+		<property name="validator" ref="validator"/>
 		<!-- <property name="propertyEditorRegistrars">
 			<list>
 				<ref bean="customPropertyEditor"/>
 			</list>
 		</property> -->
 	</bean>
+	
+	<!-- 配置校验器 -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+		<property name="validationMessageSource" ref="messageSource"/>
+	</bean>
+	<!-- 配置校验信息 -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>classpath:CustomValidationMessages</value>
+			</list>
+		</property>
+		<property name="fileEncodings" value="utf-8"/>
+		<property name="cacheSeconds" value="120"/>
+	</bean>
+	
+	<!-- 定义转换器的工厂类 -->
 	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
 			<list>

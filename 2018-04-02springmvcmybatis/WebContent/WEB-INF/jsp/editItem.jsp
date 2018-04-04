@@ -7,9 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>修改商品信息</title>
-
 </head>
 <body> 
+<c:forEach var="error" items="${errors}" >
+	<font color="red">${error.defaultMessage }</font>
+</c:forEach>
 <form id="itemForm" action="${pageContext.request.contextPath}/items/updateItems.action" method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" value="${item.id }"/>
 修改商品信息：
