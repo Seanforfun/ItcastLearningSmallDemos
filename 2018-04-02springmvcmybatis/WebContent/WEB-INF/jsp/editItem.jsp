@@ -10,7 +10,7 @@
 
 </head>
 <body> 
-<form id="itemForm" action="${pageContext.request.contextPath}/items/updateItems.action" method="GET">
+<form id="itemForm" action="${pageContext.request.contextPath}/items/updateItems.action" method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" value="${item.id }"/>
 修改商品信息：
 <table width="100%" border=1>
@@ -25,6 +25,16 @@
 <tr>
 	<td>商品价格</td>
 	<td><input type="text" name="price" value="${item.price }"/></td>
+</tr>
+<tr>
+	<td>商品图片</td>
+	<td>
+		<c:if test="${item.pic !=null}">
+			<img src="/pic/${item.pic}" width=100 height=100/>
+			<br/>
+		</c:if>
+		<input type="file"  name="pictureFile"/> 
+	</td>
 </tr>
 <tr>
 	<td>商品生产日期</td>

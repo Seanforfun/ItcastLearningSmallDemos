@@ -1,27 +1,20 @@
 package ca.mcmaster.ssm.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import ca.mcmaster.ssm.po.Items;
 import ca.mcmaster.ssm.po.ItemsCustom;
 import ca.mcmaster.ssm.po.ItemsQueryVo;
 import ca.mcmaster.ssm.service.ebi.ItemsService;
@@ -82,18 +75,28 @@ public class ItemsController {
 	// }
 
 	// 重定向无法共享request域的数据，并且url会发生变化
-	@RequestMapping(value = "/updateItems", method = RequestMethod.GET)
+	@RequestMapping(value = "/updateItems", method = {RequestMethod.GET, RequestMethod.POST})
 	public String updateItems(Model model,
+			MultipartFile pictureFile,
 			@ModelAttribute(value = "id") Integer id,
 			@ModelAttribute(value = "item") ItemsCustom itemsCustom,
 			ItemsQueryVo itemsQueryVo) throws Exception {
+		if(null != pictureFile){
+			String originName = pictureFile.getOriginalFilename();
+			String path = "F:\\ImageSave\\";
+			String newFilename = UUID.randomUUID() + originName.substring(originName.lastIndexOf("."));
+			String name = path + newFilename;
+			File image = new File(name);
+			pictureFile.transferTo(image);
+			itemsCustom.setPic(newFilename);
+		}
 		// 通过传入model将数据回显
 		// model.addAttribute("id", id);
 		// model.addAttribute("item", item);
 		itemsService.updateItem(id, itemsCustom);
-		// return "redirect:queryItems.action";
+//		 return "redirect:queryItems.action";
 		// return "forward:queryItems.action";
-		return "editItem";
+		return "redirect:queryItems.action";
 	}
 
 	// 自定义属性编辑器,无法在多个类中公用
@@ -110,5 +113,10 @@ public class ItemsController {
 		itemsType.put("001", "数码类");
 		itemsType.put("002", "服装");
 		return itemsType;
+	}
+	
+	@RequestMapping("/deleteItems")
+	public String deleteItems(Integer[] delete_id) throws Exception{
+		return "redirect:queryItems.action";
 	}
 }
