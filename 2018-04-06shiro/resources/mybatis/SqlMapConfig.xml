@@ -1,0 +1,15 @@
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<!-- <typeAlias type="ca.mcmaster.vo.User" alias="user"/> -->	
+		<package name="ca.mcmaster.ssm.po"/>
+	</typeAliases>
+	
+	<!-- 加载mapper.xml -->
+	<!-- 通过spring中配置的MapperScannerConfigurer，可以取代以下的mapper配置  -->
+	<!-- <mappers>		
+		<package name="ca.mcmaster.ssm.mapper"/>
+	</mappers> -->
+</configuration>

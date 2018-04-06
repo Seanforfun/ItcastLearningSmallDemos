@@ -40,3 +40,5 @@ Watch vedios from itcast education. This repository is used to save all of the s
 #19 Merge spring, springMVC and mybatis.(2018-04-02)
 
 #20 Mybatis generator.(2018-04-02)
+
+#21 Shiro practice project.(2018-04-06)
