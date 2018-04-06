@@ -50,7 +50,7 @@ Spring MVC总结：
 		•  @AssertFalse 被注释的元素必须为false
 		
 		3.在controller方法使用指定分组的校验:
-		@Validated(value={ValidateGroup.class}) ItemsCustom itemsCustom
+		@Validated(value={ValidateGroup.class}) ItemsCustom itemsCustom		
 		
 @InitBinder 使用@InitBinder标签在运行期注册一个属性编辑器（转换器），这种编辑器只在当前Controller里面有效；
 	 @InitBinder
@@ -89,8 +89,7 @@ Spring MVC总结：
 			<context:component-scan base-package="com.java.controller" />  
 			<mvc:annotation-driven/>
 
-全局异常处理器：
-	
+全局异常处理器：	
 	//从ApplicationContext中读出自定义异常处理器
 	protected void initStrategies(ApplicationContext context) {
 		initMultipartResolver(context);
@@ -164,9 +163,35 @@ Spring MVC总结：
 		}
 	}
 	
-		
-	
-	
+校验器Validator:
+	1.注解的方式实现校验器，第一部分已经提到。
+	<mvc:annotation-driven conversion-service="conversionService" validator="validator"></mvc:annotation-driven>
+	2.配置实现校验器。
+	<!-- 配置校验器 -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+		<property name="validationMessageSource" ref="messageSource"/>
+	</bean>
+	<!-- 配置校验信息 -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>classpath:CustomValidationMessages</value>
+			</list>
+		</property>
+		<property name="fileEncodings" value="utf-8"/>
+		<property name="cacheSeconds" value="120"/>
+	</bean>
+	<bean id="customBinder" class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+		<property name="conversionService" ref="conversionService"/>
+		<!-- 绑定校验器 -->
+		<property name="validator" ref="validator"/>
+		<!-- <property name="propertyEditorRegistrars">
+			<list>
+				<ref bean="customPropertyEditor"/>
+			</list>
+		</property> -->
+	</bean>
 	
 
 
