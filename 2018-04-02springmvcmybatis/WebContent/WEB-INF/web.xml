@@ -11,22 +11,37 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
   
-  <servlet>
+<!--   <servlet>
 	  <servlet-name>springmvc</servlet-name>
 	  <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 	  	<init-param>
 	  		<param-name>contextConfigLocation</param-name>
-	  		<!-- 默认地址:classpath:"servlet名称" + "-servlet.xml" -> springmvc-servlet.xml-->
+	  		默认地址:classpath:"servlet名称" + "-servlet.xml" -> springmvc-servlet.xml
 	  		<param-value>classpath:spring/springmvc.xml</param-value>
 	  	</init-param>
 	</servlet>
 	<servlet-mapping>
 	  	<servlet-name>springmvc</servlet-name>
-	  	<!-- 可以配置/，说明此工程所有的请求均由springmvc解析，可以实现Restful方式，需要特殊处理 -->
-	  	<!-- 也可以通过正则表达式配置，这种方法较为常用 -->
-	  	<!-- 不可以配置/* -->
+	  	可以配置/，说明此工程所有的请求均由springmvc解析，可以实现Restful方式，需要特殊处理
+	  	也可以通过正则表达式配置，这种方法较为常用
+	  	不可以配置/*
 	  	<url-pattern>*.action</url-pattern>
-	 </servlet-mapping>
+	 </servlet-mapping> -->
+	 
+	 <!-- 实现restful配置 -->
+	  <servlet>
+		  <servlet-name>springmvc-rest</servlet-name>
+		  <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		  	<init-param>
+		  		<param-name>contextConfigLocation</param-name>
+		  		<!-- 默认地址:classpath:"servlet名称" + "-servlet.xml" -> springmvc-servlet.xml-->
+		  		<param-value>classpath:spring/springmvc.xml</param-value>
+		  	</init-param>
+		</servlet>
+		<servlet-mapping>
+		  	<servlet-name>springmvc-rest</servlet-name>
+		  	<url-pattern>/</url-pattern>
+		 </servlet-mapping>
 	 
 	 <!-- post乱码处理 -->
 	<filter>

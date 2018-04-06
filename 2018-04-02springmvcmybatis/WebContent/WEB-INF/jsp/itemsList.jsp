@@ -13,8 +13,19 @@
 		document.itemsForm.action="${pageContext.request.contextPath }/items/deleteItems.action";
 		document.itemsForm.submit();
 	}
+	
+	function logout(){
+		$.post("${pageContext.request.contextPath }/user/logout", {}, function(){
+			
+		});
+	}
 </script>
 <body> 
+<c:if test="${usercode != null}">
+当前用户:${usercode } <br/>
+<!-- <input type="button" value="logout" onclick="logout()"> -->
+<a href="${pageContext.request.contextPath }/user/logout">logout</a>
+</c:if>
 <form name="itemsForm" action="${pageContext.request.contextPath }/item/queryItem.action" method="post">
 查询条件：
 <table width="100%" border=1>
