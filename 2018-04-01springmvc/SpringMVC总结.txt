@@ -1,0 +1,190 @@
+Spring MVC总结：
+基于一个DispatcherServlet（Structs是基于DispatcherFilter的）
+一大块+三大块：
+													DispatcherServlet
+															|
+													HandlerMapping
+															|
+													HandlerAdapter
+															|
+													ViewResolver
+注解：
+@Controller： 再类上定义控制器。
+@RequestMapping(value="{url}", method={RequestMethod Enum})
+@RequestParam(value = "item_id", required = false, defaultValue = "1")	在形参之前的注解，页面的name值和形参名不相同，可以通过该注解匹配参数，接收形参。
+@ModelAttribute(value = "item") 用于POJO的绑定, 会根据字段的名称将传入后台的字段绑定进入对应POJO字段。
+	前端：name="item.name"
+	后台 ItemCustom extends Item
+	@ModelAttribute(value = "item") ItemCustom itemCustom
+@ResponseBody: 返回值以JSON形式存储数据
+@RequestBody: 提醒Controller从前端接收的参数是以JSON形式存在的。
+@Validated(value=ValidateGroup.class)：
+	用于校验器分组：
+		1.定义分组接口：
+		public interface ValidGroup1 {  
+			//接口中不需要定义任何方法，紧是对不同的校验进行分组  
+			//此分组只校验商品名称长度  
+		} 
+		2.在校验规则中添加分组：
+		@Size(min=1,max=30,message="{items.name.length.error}",groups={ValidGroup1.class})  
+		private String name; 
+		
+		HibernateValidator扩展注解类：
+		• @Email  被注释的元素必须是电子邮箱地址
+		• @Length  被注释的字符串的大小必须在指定的范围内
+		• @NotEmpty  被注释的字符串的必须非空
+		• @Range  被注释的元素必须在合适的范围内
+		JSR303 校验框架注解类：
+		• @NotNull  注解元素必须是非空
+		• @Null  注解元素必须是空
+		• @Digits  验证数字构成是否合法
+		• @Future  验证是否在当前系统时间之后
+		• @Past  验证是否在当前系统时间之前
+		• @Max  验证值是否小于等于最大指定整数值
+		• @Min  验证值是否大于等于最小指定整数值
+		•  @Pattern 验证字符串是否匹配指定的正则表达式
+		•  @Size 验证元素大小是否在指定范围内
+		•  @DecimalMax 验证值是否小于等于最大指定小数值
+		•  @DecimalMin 验证值是否大于等于最小指定小数值
+		•  @AssertTrue 被注释的元素必须为true
+		•  @AssertFalse 被注释的元素必须为false
+		
+		3.在controller方法使用指定分组的校验:
+		@Validated(value={ValidateGroup.class}) ItemsCustom itemsCustom
+		
+@InitBinder 使用@InitBinder标签在运行期注册一个属性编辑器（转换器），这种编辑器只在当前Controller里面有效；
+	 @InitBinder
+	 public void initBind(WebDataBinder binder) throws Exception{
+		 binder.registerCustomEditor(Date.class, new CustomDateEditor(new
+		 SimpleDateFormat("yyyy-MM-dd HH-mm-ss"), true));
+	}
+
+------------------------------------------------------------------------------------------------------------------------------
+全局属性编辑器（转换器）：
+1.定义自己的WebBindingInitializer：
+ public class MyWebBindingInitializer implements WebBindingInitializer {  
+  
+    @Override  
+    public void initBinder(WebDataBinder binder, WebRequest request) {  
+        // TODO Auto-generated method stub  
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), false));  
+    }  
+  
+} 
+2.在springMVC的配置文件里面定义一个AnnotationMethodHandlerAdapter，并设置其WebBindingInitializer属性为我们自己定义的WebBindingInitializer对象
+     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  
+            <property name="cacheSeconds" value="0"/>  
+            <property name="webBindingInitializer">  
+                <bean class="com.xxx.blog.util.MyWebBindingInitializer"/>  
+            </property>  
+        </bean> 
+		
+		如果使用了<mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>不生效，解决办法就是手动的添加上述bean，并把它们加在<mvc:annotation-driven/>的前面：	
+			<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">      
+				<property name="webBindingInitializer" >      
+					<bean class = "com.java.util.MyWebBindingInitializer"/>      
+				</property >      
+			</bean>   
+			<!-- 使用注解的包，包括子集 -->  
+			<context:component-scan base-package="com.java.controller" />  
+			<mvc:annotation-driven/>
+
+全局异常处理器：
+	
+	//从ApplicationContext中读出自定义异常处理器
+	protected void initStrategies(ApplicationContext context) {
+		initMultipartResolver(context);
+		initLocaleResolver(context);
+		initThemeResolver(context);
+		initHandlerMappings(context);
+		initHandlerAdapters(context);
+	***	initHandlerExceptionResolvers(context);		->this.handlerExceptionResolvers = new ArrayList<HandlerExceptionResolver>(matchingBeans.values());//将自定义的异常处理器加入链表中
+		initRequestToViewNameTranslator(context);
+		initViewResolvers(context);
+		initFlashMapManager(context);
+	}
+	
+	DispatcherServlet.doDispatch()中:
+	catch (Exception ex) {
+		Object handler = (mappedHandler != null ? mappedHandler.getHandler() : null);
+	***	mv = processHandlerException(processedRequest, response, handler, ex);
+		errorView = (mv != null);
+	}
+	
+	// Check registered HandlerExceptionResolvers...
+	ModelAndView exMv = null;
+	for (HandlerExceptionResolver handlerExceptionResolver : this.handlerExceptionResolvers) {
+		exMv = handlerExceptionResolver.resolveException(request, response, handler, ex);		//调用我们重写的public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+		if (exMv != null) {
+			break;
+		}
+	}
+	
+	public class CustomExceptionResolver implements HandlerExceptionResolver {
+
+	@Override
+	public ModelAndView resolveException(HttpServletRequest request,
+				HttpServletResponse response, Object handler, Exception ex) {
+			ex.printStackTrace();
+			CustomException customException = null;	
+			if(ex instanceof CustomException){									//判断是不是我们定义的异常
+				customException = (CustomException) ex;
+			}else{
+				customException = new CustomException("Unknown error!");
+			}
+			request.setAttribute("error", customException.getMessage());
+			try {
+				request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+			return new ModelAndView();
+		}
+	}
+	
+拦截器Interceptor：
+1.SpringMVC.xml中的配置：
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="ca.mcmaster.ssm.intercepter.LoginIntercepter"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	DispatcherServlet.doDispatch()中，读取出所有的Interceptor，并一个个实施方法。
+	HandlerInterceptor[] interceptors = mappedHandler.getInterceptors();
+	if (interceptors != null) {
+		for (int i = 0; i < interceptors.length; i++) {
+			HandlerInterceptor interceptor = interceptors[i];
+			if (!interceptor.preHandle(processedRequest, response, mappedHandler.getHandler())) {
+				triggerAfterCompletion(mappedHandler, interceptorIndex, processedRequest, response, null);
+				return;
+			}
+			interceptorIndex = i;
+		}
+	}
+	
+		
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
