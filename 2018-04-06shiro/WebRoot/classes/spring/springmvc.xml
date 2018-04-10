@@ -82,10 +82,10 @@
 	</bean>
 	
 	<!-- **********************************拦截器*******************************************-->
-	<!-- <mvc:interceptors>
+	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<bean class="ca.mcmaster.ssm.intercepter.LoginIntercepter"/>
 		</mvc:interceptor>
-	</mvc:interceptors> -->
+	</mvc:interceptors>
 </beans>

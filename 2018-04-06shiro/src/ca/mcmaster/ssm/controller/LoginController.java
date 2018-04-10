@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ca.mcmaster.ssm.exception.CustomException;
 import ca.mcmaster.ssm.po.ActiveUser;
 import ca.mcmaster.ssm.service.ebi.SysEbi;
 
@@ -21,11 +22,17 @@ import ca.mcmaster.ssm.service.ebi.SysEbi;
 public class LoginController {
 	@Autowired
 	private SysEbi sysEbi;
-	@RequestMapping(value="/{usercode}/{password}", method=RequestMethod.POST)
-	public String login(HttpSession session, @PathVariable String usercode, @PathVariable String password) throws Exception{
+	@RequestMapping(value="/login", method={RequestMethod.POST, RequestMethod.GET})
+	public String login(HttpSession session, String usercode, String password, String randomcode) throws Exception{
+		//check verify code
+		String randomcode_correct = (String) session.getAttribute("validateCode");
+		if(!randomcode_correct.equalsIgnoreCase(randomcode)){
+			new CustomException("Wrong validate code!");
+		}
+		
 		ActiveUser activeUser = sysEbi.authenticate(usercode, password);
 		session.setAttribute("activeUser", activeUser);
-		return "redirect:/items/queryItems.action";
+		return "redirect:/first.action";
 	}
 	@RequestMapping("/logout")
 	public String logout(HttpSession session, String usercode, String password){
