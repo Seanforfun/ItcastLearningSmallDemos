@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ca.mcmaster.ssm.mapper.SysPermissionMapperCustom" >
+	<select id="findMenuListByUserId" parameterType="string" resultType="sysPermission">
+		SELECT *
+		FROM sys_permission
+		<where>
+			<include refid=""></include>
+		</where>
+		WHERE TYPE = 'menu'
+		    AND id IN(SELECT
+		                sys_role_permission.sys_permission_id
+		              FROM sys_role_permission
+		              WHERE sys_role_id IN(SELECT
+		                                     sys_user_role.sys_role_id
+		                                   FROM sys_user_role
+		                                   WHERE sys_user_role.sys_user_id = #{sysPermission.id}))
+	</select>
+	
+	<select id="findPermissionByUserId" parameterType="string" resultType="sysPermission">
+		SELECT *
+		FROM sys_permission
+		WHERE TYPE = 'permission'
+		    AND id IN(SELECT
+		                sys_role_permission.sys_permission_id
+		              FROM sys_role_permission
+		              WHERE sys_role_id IN(SELECT
+		                                     sys_user_role.sys_role_id
+		                                   FROM sys_user_role
+		                                   WHERE sys_user_role.sys_user_id = #{sysPermission.id}))
+	</select>
+</mapper>

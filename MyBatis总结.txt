@@ -1,0 +1,37 @@
+﻿Mybatis总结：
+------------------------------------------------------------------ResultMap----------------------------------------------------------------
+1.ResultMap：
+	->ResultMap的作用是用户将数据库查询的结果映射到类的引用中。
+	->如果数据库返回值都可以映射在POJO类中，根本没必要用ResultMap，只要在resultMap处配置POJO即可。
+	->在一对多关系的映射中，必须要配置resultMap，否则只返回最后一条信息。
+	
+	<!-- type: 类名，建议写全路径，要将数据库返回值映射到哪一个类 -->
+	<resultMap type="orders" id="ordersUsersResultMap">
+		<!-- id:主键 -->
+		<id column="id" property="id"/>
+		<!-- result：简单类型字段 -->
+		<result column="user_id" property="userId"/>
+		<result column="number" property="number"/>
+		<result column="createtime" property="createtime"/>
+		<result column="note" property="note"/>
+		<!-- 一对一查询，将数据库中的column映射到orders的user属性中 -->
+		<!-- property：当前类中的字段名 -->
+		<!-- javaType：该字段映射的类的名称 -->
+		<association property="user" javaType="user" >
+			<id column="user_id" property="id"/>
+			<result column="username" property="username"/>
+		</association>
+	</resultMap>
+	
+	<!-- extends: 继承某个已经定义好的resultMap-->
+	<resultMap type="orders" id="orderAndOrderdetails" extends="ordersUsersResultMap">
+		<!-- 一对多查询，将数据库映射到orderdetails链表中 -->
+		<collection property="orderdetails" ofType="orderdetail">
+				<id column="orderdetail_id" property="id"/>
+				<result column="orderdetail_item_num" property="itemsNum"/>
+				<result column="orderdetail_item_id" property="itemsId"/>
+		</collection>
+	</resultMap>
+	
+
+		

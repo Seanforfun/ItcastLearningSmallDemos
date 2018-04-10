@@ -87,5 +87,9 @@
 			<mvc:mapping path="/**"/>
 			<bean class="ca.mcmaster.ssm.intercepter.LoginIntercepter"/>
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="ca.mcmaster.ssm.intercepter.PermissionInterceptor"/>
+		</mvc:interceptor>
 	</mvc:interceptors>
 </beans>
