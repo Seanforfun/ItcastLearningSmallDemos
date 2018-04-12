@@ -1,0 +1,10 @@
+shiro总结：
+1.SecurityManager	构造SecurityManager环境
+		|
+2.Subject.login()	提交认证
+		|
+3.SecurityManager.login()	执行认证
+		|
+4.Autheticator				执行认证
+		|
+5.	  Realm					根据身份信息获取认证信息

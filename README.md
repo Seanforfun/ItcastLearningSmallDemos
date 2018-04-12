@@ -41,4 +41,6 @@ Watch vedios from itcast education. This repository is used to save all of the s
 
 #20 Mybatis generator.(2018-04-02)
 
-#21 Shiro practice project.(2018-04-06)
+#21 Shiro like practice project based on url.(2018-04-06)
+
+#22 Shiro Introduction.(2018-04-12)
