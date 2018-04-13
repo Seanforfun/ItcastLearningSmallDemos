@@ -1,10 +1,78 @@
 shiro总结：
-1.SecurityManager	构造SecurityManager环境
-		|
-2.Subject.login()	提交认证
-		|
-3.SecurityManager.login()	执行认证
-		|
-4.Autheticator				执行认证
-		|
-5.	  Realm					根据身份信息获取认证信息
+1.流程：
+	1.SecurityManager	构造SecurityManager环境
+			|
+	2.Subject.login()	提交认证
+			|
+	3.SecurityManager.login()	执行认证
+			|
+	4.Autheticator				执行认证
+			|
+	5.	  Realm					根据身份信息获取认证信息
+
+	实例：
+		public void login() {
+			Factory<SecurityManager> factory = new IniSecurityManagerFactory(						//创建SecurityManager工厂
+					"classpath:shiro_first.ini");
+			SecurityManager manager = factory.getInstance();										//创建SecurityManager实例并注册服务
+			SecurityUtils.setSecurityManager(manager);
+			Subject subject = SecurityUtils.getSubject();											//通过注册的服务获取一个subject对象用于安全校验
+			UsernamePasswordToken token = new UsernamePasswordToken("zhangsan", "123456");
+			
+			try {
+				subject.login(token);
+			} catch (AuthenticationException e) {
+				e.printStackTrace();
+			}
+			System.out.println(subject.isAuthenticated());
+		}
+		
+		用户名不存在：org.apache.shiro.authc.UnknownAccountException
+		密码错误：org.apache.shiro.authc.IncorrectCredentialsException
+		subject.isAuthenticated() -> 用于检验是否通过安全凭证。
+		
+		ini文件：用于存储用户信息
+		[users]
+		zhangsan=1234567
+		lisi=123
+		
+2.自定义Realm：
+	1.继承抽象类：AuthoringRealm,实现两个抽象方法：
+	org.apache.shiro.authz.AuthorizationInfo				//自定义授权
+	org.apache.shiro.authc.AuthenticationInfo				//自定义认证
+	protected AuthenticationInfo doGetAuthenticationInfo(
+			AuthenticationToken token) throws AuthenticationException {
+		String usercode = (String) token.getPrincipal();									//用户输入的principle
+		String password_db = "123456";														//correct password from ini or database		
+		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
+				usercode, password_db, this.getName());
+		return authenticationInfo;
+	}
+	
+	[main]																					//注入CustomRealm到securityManager
+	customRealm = ca.mcmaster.shiro.realm.CustomRealm
+	securityManager.realms = $customRealm
+	
+	实例：
+	public void testCustomRealm() {
+		Factory<SecurityManager> factory = new IniSecurityManagerFactory(
+				"classpath:shiro_realm.ini");
+		SecurityManager manager = factory.getInstance();
+		SecurityUtils.setSecurityManager(manager);
+		Subject subject = SecurityUtils.getSubject();
+		UsernamePasswordToken token = new UsernamePasswordToken("zhangsan", "1234567");
+		
+		try {
+			subject.login(token);
+		} catch (AuthenticationException e) {
+			e.printStackTrace();
+		}
+		System.out.println(subject.isAuthenticated());
+		subject.logout();
+		System.out.println(subject.isAuthenticated());
+	}
+
+	
+	
+	
+	
