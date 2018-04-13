@@ -49,6 +49,20 @@ shiro总结：
 		return authenticationInfo;
 	}
 	
+	@Override
+	protected AuthorizationInfo doGetAuthorizationInfo(
+			PrincipalCollection principals) {
+		String usercode = (String) principals.getPrimaryPrincipal();						//获取用户的主身份
+		List<String> permissions = new ArrayList<>();										
+		permissions.add("user:create");
+		permissions.add("items:add");
+		
+		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+		simpleAuthorizationInfo.addStringPermissions(permissions);
+		
+		return simpleAuthorizationInfo;
+	}
+	
 	[main]																					//注入CustomRealm到securityManager
 	customRealm = ca.mcmaster.shiro.realm.CustomRealm
 	securityManager.realms = $customRealm
@@ -70,6 +84,51 @@ shiro总结：
 		System.out.println(subject.isAuthenticated());
 		subject.logout();
 		System.out.println(subject.isAuthenticated());
+	}
+	
+3.授权：授权是指当前用户是否有权访问某些资源：
+	public void testAuthorization(){
+		Factory<SecurityManager> factory = new IniSecurityManagerFactory("classpath:shiro_permission.ini");
+		SecurityManager securityManager = factory.getInstance();
+		SecurityUtils.setSecurityManager(securityManager);
+		
+		Subject subject = SecurityUtils.getSubject();
+		
+		UsernamePasswordToken token = new UsernamePasswordToken("zhangsan", "1234567");
+		
+		try {
+			subject.login(token);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//基于角色的授权
+		System.out.println(subject.isAuthenticated());
+		System.out.println(subject.hasRole("role1"));
+		//基于资源的授权
+		System.out.println(subject.isPermitted("user:create"));
+	}
+	
+	基于自定义Realm的测试：
+	@Test
+	public void testCustomAuthoriztionRealm() {
+		Factory<SecurityManager> factory = new IniSecurityManagerFactory(
+				"classpath:shiro_realm.ini");
+		SecurityManager securityManager = factory.getInstance();
+		SecurityUtils.setSecurityManager(securityManager);
+
+		Subject subject = SecurityUtils.getSubject();
+
+		UsernamePasswordToken token = new UsernamePasswordToken("zhangsan",
+				"1234567");
+
+		try {
+			subject.login(token);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		System.out.println(subject.isPermitted("user:create"));
 	}
 
 	
