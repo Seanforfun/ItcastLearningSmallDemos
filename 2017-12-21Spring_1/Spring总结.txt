@@ -1,0 +1,56 @@
+--------------------------------------------------------Spring总结-----------------------------------------------------
+@Configuration:用于定义配置类。
+	->在我们原来使用xml配置的时候使用的是ClassPathXmlApplicationContext来读取配置文件，而我们使用@Configuration以后，在使用AnnotationApplicationContext扫描@Configuration
+	
+@Bean：方法级别的配置。相当于对一个方法配置了一个类，可以设置单例和多例，也可以设置Bean对象的生命周期。
+	->设置生命周期：
+		@Bean(initMethod = "init")，利用类中的init方法作为类的初始化方法。
+		@Bean(destroyMethod = "cleanup")，利用类的cleanup方法配置对象的消亡方法。
+	->设置单例和多例：
+		@Scope("singleton")			//全局只是用一个对象，每次对其的调用都是对同一个对象的引用
+		@Scope("prototype")			//每次使用新建一个对象
+	
+实例：	
+	@Configuration
+	public class AppConfig {
+
+		@Bean
+		public TransferService transferService() {
+			return new TransferServiceImpl();
+		}
+
+	}
+	等同于：
+	<beans>
+		<bean id="transferService" class="com.acme.TransferServiceImpl"/>
+	</beans>
+	
+	如果Bean之间有依赖关系：
+	<bean id="mockService" class="..MockServiceImpl">
+		<propery name ="dependencyService" ref="dependencyService" />
+	</bean>
+
+	<bean id="dependencyService" class="DependencyServiceImpl"></bean>
+	
+	等同于：此时IOC会帮我们自动填充Bean的依赖关系。
+	@Configuration
+	public class MockConfiguration{
+		@Bean
+		public MockService mockService(){
+			return new MockServiceImpl(dependencyService);
+		}
+		
+		@Bean
+		public DependencyService dependencyService(){
+			return new DependencyServiceImpl();
+		}
+	}
+		
+@EnableScheduling:Switch to turn on the spring scheduling.
+reference:https://blog.csdn.net/qq_26525215/article/details/53543816
+	TaskSchedule, use this annotation together with @Scheduled()
+	
+@EnableCaching
+reference:https://spring.io/guides/gs/caching/
+	Switch of Spring's cache, use with Cacheable, CachePut and CacheEvict.
+	
