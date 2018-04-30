@@ -1,4 +1,4 @@
-Spring MVC总结：
+﻿Spring MVC总结：
 基于一个DispatcherServlet（Structs是基于DispatcherFilter的）
 一大块+三大块：
 													DispatcherServlet
@@ -18,6 +18,10 @@ Spring MVC总结：
 	前端：name="item.name"
 	后台 ItemCustom extends Item
 	@ModelAttribute(value = "item") ItemCustom itemCustom
+***在进行@ModelAndAttribute绑定时，spring mvc会自动进行一些校验工作，所以切记在之后添加BindingResult bindingResult
+****BindingResult bindingResult一定要紧接其后，不然会出现如下错误：
+Validation failed for object='article'. Error count: 1
+
 @ResponseBody: 返回值以JSON形式存储数据
 @RequestBody: 提醒Controller从前端接收的参数是以JSON形式存在的。
 @Validated(value=ValidateGroup.class)：
